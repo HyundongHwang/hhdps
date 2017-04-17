@@ -1,5 +1,4 @@
 ﻿sal code "C:\Program Files (x86)\Microsoft VS Code\Code.exe"
-sal sublime "c:\hhdcommand\Sublime Text 2.0.2\sublime_text.exe"
 sal open "C:\Windows\SysWOW64\explorer.exe"
 sal vs2013 "C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\IDE\devenv.com"
 sal vs2015 "C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\devenv.com"
@@ -752,7 +751,7 @@ function hhdcodeprofileps1
     (
     )
     
-    code ""C:\hhdcommand\PsDev\PsScripts\profile.ps1""
+    code ""C:\hhdps\profile.ps1""
 }
 
 
@@ -1021,7 +1020,7 @@ function hhdvs2015profileps1
     (
     )
 
-    hhdvs2015openfile C:\hhdcommand\PsDev\PsScripts\profile.ps1
+    hhdvs2015openfile C:\hhdps\profile.ps1
 }
 
 
@@ -1096,42 +1095,29 @@ function hhdazurestorageuploadfile
 
 write "main start ..."
 write "OutputEncoding = UTF8 ..."
-$OutputEncoding = New-Object -TypeName System.Text.UTF8Encoding -Verbose
+$OutputEncoding = New-Object -TypeName System.Text.UTF8Encoding
     
 write "Set-ExecutionPolicy Bypass ..."
-Set-ExecutionPolicy Bypass -Scope Process -Force -Verbose
-
-
-
-write "configure path ..."
-
-$oldPath = Get-Content Env:\Path
-
-Set-Item Env:\Path "
-    $oldPath;
-    C:\hhdcommand\PortableGit\bin;
-    C:\Program Files\nodejs\;
-" -Verbose
-
-cat Env:\Path
+Set-ExecutionPolicy Bypass -Scope Process -Force
 
 
 
 if(!(Test-Path /temp))
 {
-    md /temp -Verbose
+    md /temp
 }
 
-cd /temp -Verbose
+cd /temp
+
 
 
 write "update profile.ps1 ..."
 
-if (Test-Path C:\hhdcommand\PsDev\PsScripts\profile.ps1)
+if (Test-Path C:\hhdps\profile.ps1)
 {
     write "update profile.ps1 ..."
-    cp -Force C:\hhdcommand\PsDev\PsScripts\profile.ps1 "C:\Windows\System32\WindowsPowerShell\v1.0" -Verbose
-    cp -Force C:\hhdcommand\PsDev\PsScripts\profile.ps1 "C:\Windows\SysWOW64\WindowsPowerShell\v1.0" -Verbose
+    cp -Force C:\hhdps\profile.ps1 "C:\Windows\System32\WindowsPowerShell\v1.0"
+    cp -Force C:\hhdps\profile.ps1 "C:\Windows\SysWOW64\WindowsPowerShell\v1.0"
     write "open profile.ps1 ..."
 }
 else
@@ -1143,21 +1129,24 @@ else
 
 write "load hhdfavList.json ..."
 
-cat ~/hhdfavList.json | ConvertFrom-Json | set temp 
+if (Test-Path ~/hhdfavList.jso) 
+{
+    cat ~/hhdfavList.json | ConvertFrom-Json | set temp 
 
-$g_hhdDirBackwardStack = New-Object -TypeName System.Collections.Stack
-$g_hhdDirForwardStack = New-Object -TypeName System.Collections.Stack
-$g_hhdFavList = New-Object System.Collections.Generic.List[psobject]
-    
-$temp | % { 
-    $newObj = New-Object psobject
-    $newObj | Add-Member -MemberType NoteProperty -Name name -Value $_.name
-    $newObj | Add-Member -MemberType NoteProperty -Name path -Value $_.path
-    $g_hhdFavList.Add($newObj) 
-}
+    $g_hhdDirBackwardStack = New-Object -TypeName System.Collections.Stack
+    $g_hhdDirForwardStack = New-Object -TypeName System.Collections.Stack
+    $g_hhdFavList = New-Object System.Collections.Generic.List[psobject]
+        
+    $temp | % { 
+        $newObj = New-Object psobject
+        $newObj | Add-Member -MemberType NoteProperty -Name name -Value $_.name
+        $newObj | Add-Member -MemberType NoteProperty -Name path -Value $_.path
+        $g_hhdFavList.Add($newObj) 
+    }
 
-$g_hhdFavList | % { 
-    $exp = "function hhdcd{0} {{ cd {1} }}" -f $_.name, $_.path
-    write ("exp : {0}" -f $exp)
-    Invoke-Expression $exp
+    $g_hhdFavList | % { 
+        $exp = "function hhdcd{0} {{ cd {1} }}" -f $_.name, $_.path
+        write ("exp : {0}" -f $exp)
+        Invoke-Expression $exp
+    }    
 }
