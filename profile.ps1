@@ -2,6 +2,7 @@
 sal open "C:\Windows\SysWOW64\explorer.exe"
 sal vs2013 "C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\IDE\devenv.com"
 sal vs2015 "C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\devenv.com"
+sal vs2017 "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\devenv.exe"
 sal blend2013 "C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\IDE\blend.exe"
 sal blend2015 "C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\blend.exe"
 sal nuget "C:\ProgramData\Microsoft\Windows\PowerShell\PowerShellGet\NuGet.exe"
@@ -93,20 +94,14 @@ sal vcredist_arm-Microsoft-Visual-Cpp-2015-Redistributable-14.0.24215 'C:\Progra
 sal vcredist_x64-Microsoft-Visual-Cpp-2015-Redistributable-14.0.24215 'C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\redist\1033\vcredist_x64.exe'
 sal vcredist_x86-Microsoft-Visual-Cpp-2015-Redistributable-14.0.24215 'C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\redist\1033\vcredist_x86.exe'
 sal spyxx-chm 'C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\Tools\spyxx.chm'
+sal winmerge 'C:\Program Files (x86)\WinMerge\WinMergeU.exe'
 
 
 
 
-sal ok "C:\project\161010_CoconutClient\bin\CoconutBridge\Debug\OkposMock.exe"
-sal okd "C:\project\161010_CoconutClient\bin\CoconutBridge\Debug\OkdaemonMock.exe"
-sal dp "C:\project\161010_CoconutClient\bin\CoconutBridge\Debug\DangolMock.exe"
-
-
-
-
-sal hhdopen hhdvs2015openfile
+sal hhdopen hhdvs2017openfile
 sal hhdupload hhdazurestorageuploadfile
-sal hhdopenprofileps1 hhdvs2015profileps1
+sal hhdopenhhdps hhdvs2017openhhdps
 
 
 
@@ -744,22 +739,6 @@ function hhdcdaddpath
 .SYNOPSIS
 .EXAMPLE
 #>
-function hhdcodeprofileps1
-{
-    [CmdletBinding()]
-    param
-    (
-    )
-    
-    code ""C:\hhdps\profile.ps1""
-}
-
-
-
-<#
-.SYNOPSIS
-.EXAMPLE
-#>
 function hhdgitposhinit
 {
     write "change prompt ..."
@@ -906,7 +885,7 @@ function hhdgitresetclean
 .SYNOPSIS
 .EXAMPLE
 #>
-function hhdkillwithchild
+function hhdkill
 {
     [CmdletBinding()]
     param
@@ -932,8 +911,8 @@ function hhdkillvsgarbage
     (
     )
 
-    hhdkillwithchild -processName vshub
-    hhdkillwithchild -processName msbuild
+    hhdkill -processName vshub
+    hhdkill -processName msbuild
 }
 
 
@@ -993,7 +972,7 @@ function hhdimagegetwin10spotlightlockscreen
 .SYNOPSIS
 .EXAMPLE
 #>
-function hhdvs2015openfile
+function hhdvs2017openfile
 {
     [CmdletBinding()]
     param
@@ -1003,8 +982,7 @@ function hhdvs2015openfile
         $FILE_NAME
     )
 
-    ls $FILE_NAME -File | select FullName
-    ls $FILE_NAME | % { vs2015 /Edit $_.FullName }
+    vs2017 /Edit $FILE_NAME
 }
 
 
@@ -1013,14 +991,14 @@ function hhdvs2015openfile
 .SYNOPSIS
 .EXAMPLE
 #>
-function hhdvs2015profileps1
+function hhdvs2017openhhdps
 {
     [CmdletBinding()]
     param
     (
     )
 
-    hhdvs2015openfile C:\hhdps\profile.ps1
+    hhdvs2017openfile C:\hhdps
 }
 
 
@@ -1102,23 +1080,13 @@ Set-ExecutionPolicy Bypass -Scope Process -Force
 
 
 
-if(!(Test-Path /temp))
-{
-    md /temp
-}
-
-cd /temp
-
-
-
 write "update profile.ps1 ..."
 
 if (Test-Path C:\hhdps\profile.ps1)
 {
-    write "update profile.ps1 ..."
+    write "copy profile.ps1 ..."
     cp -Force C:\hhdps\profile.ps1 "C:\Windows\System32\WindowsPowerShell\v1.0"
     cp -Force C:\hhdps\profile.ps1 "C:\Windows\SysWOW64\WindowsPowerShell\v1.0"
-    write "open profile.ps1 ..."
 }
 else
 {
@@ -1129,7 +1097,7 @@ else
 
 write "load hhdfavList.json ..."
 
-if (Test-Path ~/hhdfavList.jso) 
+if (Test-Path ~/hhdfavList.json) 
 {
     cat ~/hhdfavList.json | ConvertFrom-Json | set temp 
 
@@ -1149,4 +1117,8 @@ if (Test-Path ~/hhdfavList.jso)
         write ("exp : {0}" -f $exp)
         Invoke-Expression $exp
     }    
+}
+else 
+{
+    $g_hhdFavList = New-Object System.Collections.Generic.List[psobject]
 }

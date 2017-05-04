@@ -15,15 +15,22 @@ param (
 1..100 | 
 % {
     [Microsoft.PowerShell.Commands.HtmlWebResponseObject]$html = 
-        Invoke-WebRequest -Uri "http://wallpaperswide.com/top_wallpapers/page/$_"
+        Invoke-WebRequest -Uri "http://wallpaperswide.com/top_wallpapers/page/$_" -SessionVariable sessionVar
 
     $html.ParsedHtml.links | ? { $_.pathname -like "*-wallpapers.html" } | ? { $_.pathname -notlike "*-desktop*" } |
     % {
         $imageName = $_.pathname -replace "-wallpapers.html", ""
-        $imageUrl = "http://wallpaperswide.com/download/$imageName-wallpaper-1920x1080.jpg"
+        $imageFileName = "$imageName-wallpaper-1920x1080.jpg"
+        $imageUrl = "http://wallpaperswide.com/download/$imageFileName"
 
+        if (Test-Path $imageFileName) 
+        {
+            write "$imageUrl skip ..."
+            return
+        }
+        
         write "$imageUrl start ..."
-        Invoke-WebRequest -Uri $imageUrl -OutFile "$imageName-wallpaper-1920x1080.jpg" -UseBasicParsing
+        Invoke-WebRequest -Uri $imageUrl -OutFile $imageFileName -UseBasicParsing -WebSession $sessionVar
         write "$imageUrl finish ..."
     }
 }
