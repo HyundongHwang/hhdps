@@ -26,3 +26,5 @@ else
 
 ls $PROFILE_PATH | select FullName
 cat $PROFILE_PATH
+
+. $PROFILE_PATH
