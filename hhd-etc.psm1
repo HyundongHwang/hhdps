@@ -221,3 +221,28 @@ function hhdimagegetwin10spotlightlockscreen
     md $dirName
     $fileList | % { cp $_.FullName "$dirName\$($_.Name).png" }
 }
+
+
+
+<#
+.SYNOPSIS
+.EXAMPLE
+#>
+function hhdcertfromwebsite
+{
+    [CmdletBinding()]
+    param
+    (
+        [Parameter(Mandatory=$false, ValueFromPipeline=$true, ValueFromPipelinebyPropertyName=$true)]
+        [System.String]
+        $url
+    )
+
+    $req = [Net.WebRequest]::Create($url)
+    $req.GetResponse() 
+    $cert = $req.ServicePoint.Certificate
+    $bytes = $cert.Export([Security.Cryptography.X509Certificates.X509ContentType]::Cert)
+    $certFilePath = "$pwd\$($req.RequestUri.Host).cer"
+    set-content -value $bytes -encoding byte -path $certFilePath
+    certutil.exe -dump $certFilePath
+}
