@@ -246,3 +246,28 @@ function hhdcertfromwebsite
     set-content -value $bytes -encoding byte -path $certFilePath
     certutil.exe -dump $certFilePath
 }
+
+
+
+<#
+.SYNOPSIS
+.EXAMPLE
+#>
+function hhdpathset
+{
+    [CmdletBinding()]
+    param
+    (
+        [Parameter(Mandatory=$true, ValueFromPipeline=$true, ValueFromPipelinebyPropertyName=$true)]
+        [System.String]
+        $PATH_TO_ADD
+    )
+
+    if ($env:Path -like "*$PATH_TO_ADD*")
+    {
+        write "already added !!!"
+        return
+    }
+    
+    setx PATH "$env:path;$PATH_TO_ADD" /M
+}

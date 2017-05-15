@@ -157,3 +157,19 @@ function hhdgitresetclean
     git reset --hard HEAD
     git clean -fd
 }
+
+
+
+<#
+.SYNOPSIS
+.EXAMPLE
+#>
+function hhdinstallgit
+{
+    [CmdletBinding()]
+    param
+    (
+    )
+
+    explorer "https://git-scm.com/download/win"
+}

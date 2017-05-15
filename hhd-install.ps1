@@ -6,7 +6,7 @@ $HHDPS_PROFILE_ADDON_STR =
 ls "$PSSCRIPTROOT_RESOLVED\*.psm1" |
 % { 
     write "`$(`$_.Name) load ..."
-    Import-Module `$_.FullName 
+    Import-Module `$_.FullName -Force
 }
 "@
 
