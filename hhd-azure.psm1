@@ -176,38 +176,102 @@ function hhdazurestorageuploadfile
         [string]
         $FILE_NAME,
 
-        [parameter(Mandatory = $false)]
+        [parameter(Mandatory = $false, ValueFromPipeline=$true, ValueFromPipelinebyPropertyName=$true)]
         [ValidateSet("None", "Prefix", "Postfix")]
         [string]
-        $ADD_TIMESTAMP_STR = "None"
-    )
+        $ADD_TIMESTAMP_STR = "None",
 
-    $AZURE_STORAGE_CONNECTION_STR = "DefaultEndpointsProtocol=https;AccountName=hhdpublish;AccountKey=3y07DG/iIvULhXaX0hzV8LU+6JWXP1EbeEzRfAP8hOhfXrRlnI+IEbbOfCwwF+UMIJxbqwGPtFcxKNXDzuwezw==;EndpointSuffix=core.windows.net"
+        [parameter(Mandatory = $false, ValueFromPipeline=$true, ValueFromPipelinebyPropertyName=$true)]
+        [string]
+        $AZURE_STORAGE_CONNECTION_STR = "DefaultEndpointsProtocol=https;AccountName=hhdpublish;AccountKey=3y07DG/iIvULhXaX0hzV8LU+6JWXP1EbeEzRfAP8hOhfXrRlnI+IEbbOfCwwF+UMIJxbqwGPtFcxKNXDzuwezw==;EndpointSuffix=core.windows.net",
+
+        [parameter(Mandatory = $false, ValueFromPipeline=$true, ValueFromPipelinebyPropertyName=$true)]
+        [string]
+        $AZURE_STORAGE_CONTAINER = "publish"
+    )
 
     $storageCtx = New-AzureStorageContext -ConnectionString $AZURE_STORAGE_CONNECTION_STR
     # New-AzureStorageContainer -Context $storageCtx -Name "publish" -Permission Container
 
-    ls $FILE_NAME -File -Force | 
+    $upDir = Convert-Path "$FILE_NAME\.." | select -First 1
+
+    ls $FILE_NAME -File -Force -Recurse | 
     % {
-        $blobName = ""
+        $blobName = $_.FullName.Replace($upDir, "").TrimStart("\\")
+        $dirName = [System.IO.Path]::GetDirectoryName($blobName)
+        $fileName = [System.IO.Path]::GetFileNameWithoutExtension($blobName)
+        $extName = [System.IO.Path]::GetExtension($blobName)
 
         if($ADD_TIMESTAMP_STR -eq "Prefix")
         {
             $dtStr = $_.LastWriteTime.ToString("yyMMdd-HHmm")
-            $blobName = "$dtStr $($_.Name)"
+            $blobName = [System.IO.Path]::Combine($dirName, "$dtStr $fileName$extName")
         }
         elseif($ADD_TIMESTAMP_STR -eq "Postfix")
         {
             $dtStr = $_.LastWriteTime.ToString("yyMMdd-HHmm")
-            $fileName = [System.IO.Path]::GetFileNameWithoutExtension($_.Name)
-            $blobName = "$fileName $dtStr$($_.Extension)"
+            $blobName = [System.IO.Path]::Combine($dirName, "$fileName $dtStr$extName")
+        }
+
+        if ($extName -eq ".html") 
+        {
+            $props = @{"ContentType" = "text/html"};
+        }
+        elseif ($extName -eq ".css") 
+        {
+            $props = @{"ContentType" = "text/css"};
+        }
+        elseif ($extName -eq ".js") 
+        {
+            $props = @{"ContentType" = "application/javascript"};
+        }
+        elseif ($extName -eq ".json") 
+        {
+            $props = @{"ContentType" = "application/json"};
+        }
+        elseif ($extName -eq ".xml") 
+        {
+            $props = @{"ContentType" = "application/xml"};
+        }
+        elseif ($extName -eq ".txt") 
+        {
+            $props = @{"ContentType" = "text/plain"};
+        }
+        elseif ($extName -eq ".text") 
+        {
+            $props = @{"ContentType" = "text/plain"};
+        }
+        elseif ($extName -eq ".jpg") 
+        {
+            $props = @{"ContentType" = "image/jpeg"};
+        }
+        elseif ($extName -eq ".jpeg") 
+        {
+            $props = @{"ContentType" = "image/jpeg"};
+        }
+        elseif ($extName -eq ".png") 
+        {
+            $props = @{"ContentType" = "image/png"};
+        }
+        elseif ($extName -eq ".gif") 
+        {
+            $props = @{"ContentType" = "image/gif"};
+        }
+        elseif ($extName -eq ".mp3") 
+        {
+            $props = @{"ContentType" = "audio/mpeg"};
+        }
+        elseif ($extName -eq ".mp4") 
+        {
+            $props = @{"ContentType" = "video/mp4"};
         }
         else 
         {
-            $blobName = $_.Name
+            $props = @{"ContentType" = "application/octet-stream"};
         }
 
-        $blob = Set-AzureStorageBlobContent -Context $storageCtx -Container "publish" -File $_.FullName -Blob $blobName -Force
+        $blobProperties = @{"ContentType" = "text/html"};
+        $blob = Set-AzureStorageBlobContent -Context $storageCtx -Container $AZURE_STORAGE_CONTAINER -File $_.FullName -Blob $blobName -Force -Properties $blobProperties
         $obj = New-Object -typename PSObject
         $obj | Add-Member -MemberType NoteProperty -Name LocalFilePath -Value $_.FullName
         $obj | Add-Member -MemberType NoteProperty -Name DownloadUrl -Value $blob.ICloudBlob.Uri.AbsoluteUri
