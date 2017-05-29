@@ -270,11 +270,33 @@ function hhdazurestorageuploadfile
             $props = @{"ContentType" = "application/octet-stream"};
         }
 
-        $blobProperties = @{"ContentType" = "text/html"};
-        $blob = Set-AzureStorageBlobContent -Context $storageCtx -Container $AZURE_STORAGE_CONTAINER -File $_.FullName -Blob $blobName -Force -Properties $blobProperties
+        $blob = Set-AzureStorageBlobContent -Context $storageCtx -Container $AZURE_STORAGE_CONTAINER -File $_.FullName -Blob $blobName -Force -Properties $props
         $obj = New-Object -typename PSObject
         $obj | Add-Member -MemberType NoteProperty -Name LocalFilePath -Value $_.FullName
         $obj | Add-Member -MemberType NoteProperty -Name DownloadUrl -Value $blob.ICloudBlob.Uri.AbsoluteUri
         write $obj
     } | fl
+}
+
+
+
+<#
+.SYNOPSIS
+.EXAMPLE
+#>
+function hhdazurelogin
+{
+    [CmdletBinding()]
+    param
+    (
+    )
+
+    if (Test-Path ~/*.publishsettings)
+    {
+        Import-AzurePublishSettingsFile -PublishSettingsFile ~/*.publishsettings
+    }
+    else
+    {
+        Get-AzurePublishSettingsFile
+    }
 }
