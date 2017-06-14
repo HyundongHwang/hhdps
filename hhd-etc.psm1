@@ -271,3 +271,95 @@ function hhdpathset
     
     setx PATH "$env:path;$PATH_TO_ADD" /M
 }
+
+
+
+<#
+.SYNOPSIS
+.EXAMPLE
+#>
+function hhdstoragesubdir
+{
+    [CmdletBinding()]
+    param
+    (
+        [Parameter(Mandatory=$true, ValueFromPipeline=$true, ValueFromPipelinebyPropertyName=$true)]
+        [System.String]
+        $DIR
+    )
+
+    ls $DIR -Directory |
+    foreach {
+        $res = hhdstoragedir -DIR $_.FullName
+        return $res
+    }
+}
+
+
+
+<#
+.SYNOPSIS
+.EXAMPLE
+#>
+function hhdstoragedir
+{
+    [CmdletBinding()]
+    param
+    (
+        [Parameter(Mandatory=$true, ValueFromPipeline=$true, ValueFromPipelinebyPropertyName=$true)]
+        [System.String]
+        $DIR
+    )
+
+    $dir_name = Resolve-Path $DIR
+    $sum_gb = (ls $DIR -Recurse -File | measure -Sum Length).Sum / 1GB
+    $res = New-Object psobject
+    $res | Add-Member -Name dir_name -Value $dir_name -MemberType NoteProperty
+    $res | Add-Member -Name sum_gb -Value ("{0:N2}" -f $sum_gb) -MemberType NoteProperty
+    return $res
+}
+
+
+
+
+<#
+.SYNOPSIS
+.EXAMPLE
+#>
+function hhdhtmldownloadimages
+{
+    [CmdletBinding()]
+    param
+    (
+        [Parameter(Mandatory=$true, ValueFromPipeline=$true, ValueFromPipelinebyPropertyName=$true)]
+        [System.String]
+        $URL
+    )
+
+    $html = Invoke-WebRequest -Uri $URL -UseBasicParsing
+
+    $html.Images.src |
+    where {
+        $_ -like "*.jpg*"
+    } | 
+        where {
+        $_ -like "*/upload/NNEditor/*"
+    } | 
+    foreach {
+        $imgUrl = $_
+
+        if ($imgUrl.StartsWith("//")) {
+            $imgUrl = "http:$imgUrl"
+        }
+        elseif (!($imgUrl.StartsWith("http"))) {
+            $imgUrl = "http://$(([System.Uri]$URL).Host)$imgUrl"
+        }
+
+        return $imgUrl
+    } |
+    foreach {
+        $fileName = [System.Web.HttpUtility]::UrlEncode($_) 
+        write "$_ ..."
+        Invoke-WebRequest -Uri $_ -OutFile $fileName
+    }
+}
