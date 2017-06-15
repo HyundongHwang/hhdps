@@ -199,4 +199,55 @@ function hhdandroid-download-apk-from-device
 
 
 
-# adb shell dumpsys package com.hhd2002.hhdtest
+<#
+.SYNOPSIS
+.EXAMPLE
+    adb shell dumpsys package com.hhd2002.hhdtest
+#>
+function hhdandroid-adb-shell-dumpsys
+{
+    [CmdletBinding()]
+    param
+    (
+        [Parameter(Mandatory=$true, ValueFromPipeline=$true, ValueFromPipelinebyPropertyName=$true)]
+        [System.String]
+        $PACKAGE_NAME
+    )
+
+
+    adb shell dumpsys package $PACKAGE_NAME
+}
+
+
+
+<#
+.SYNOPSIS
+.EXAMPLE
+    adb shell ls /sdcard/ -al
+    adb shell ls /storage/ -al
+    adb shell ls /sdcard/Download/ -al
+#>
+function hhdandroid-adb-shell-ls-important
+{
+    [CmdletBinding()]
+    param
+    (
+    )
+
+    
+
+    $dirList = @("/sdcard/", "/storage/", "/sdcard/Download/", "/sdcard/Android/data/")
+
+    $dirList | 
+    foreach {
+        write ""
+        write ""
+        write ""
+        write "--------------------------------------------------------------------------------"
+        write "dir : $_"
+        adb shell ls $_ -al
+    }
+}
+
+
+
