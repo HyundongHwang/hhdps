@@ -2,21 +2,6 @@
 .SYNOPSIS
 .EXAMPLE
 #>
-function hhdandroid-logcat-mono
-{
-    [CmdletBinding()]
-    param
-    (
-    )
-
-    adb logcat -s mono-stdout:v
-}
-
-
-<#
-.SYNOPSIS
-.EXAMPLE
-#>
 function hhdandroid-install-apk
 {
     [CmdletBinding()]
@@ -251,3 +236,123 @@ function hhdandroid-adb-shell-ls-important
 
 
 
+<#
+.SYNOPSIS
+.EXAMPLE
+#>
+function hhdandroid-adb-file-copy-from-device
+{
+    [CmdletBinding()]
+    param
+    (
+        [Parameter(Mandatory=$true, ValueFromPipeline=$true, ValueFromPipelinebyPropertyName=$true)]
+        [System.String]
+        $FILE_PATH_DEVICE,
+
+        [Parameter(Mandatory=$true, ValueFromPipeline=$true, ValueFromPipelinebyPropertyName=$true)]
+        [System.String]
+        $FILE_PATH_PC
+    )
+
+
+    adb pull $FILE_PATH_DEVICE $FILE_PATH_PC
+}
+
+
+
+<#
+.SYNOPSIS
+.EXAMPLE
+#>
+function hhdandroid-adb-file-copy-to-device
+{
+    [CmdletBinding()]
+    param
+    (
+        [Parameter(Mandatory=$true, ValueFromPipeline=$true, ValueFromPipelinebyPropertyName=$true)]
+        [System.String]
+        $FILE_PATH_PC,
+
+        [Parameter(Mandatory=$true, ValueFromPipeline=$true, ValueFromPipelinebyPropertyName=$true)]
+        [System.String]
+        $FILE_PATH_DEVICE
+    )
+
+
+    adb push $FILE_PATH_PC $FILE_PATH_DEVICE 
+}
+
+
+
+<#
+.SYNOPSIS
+.EXAMPLE
+#>
+function hhdandroid-gradle-version
+{
+    [CmdletBinding()]
+    param
+    (
+    )
+
+
+    .\gradlew -v
+}
+
+
+
+
+<#
+.SYNOPSIS
+.EXAMPLE
+#>
+function hhdandroid-adb-logcat
+{
+    [CmdletBinding()]
+    param
+    (
+        [Parameter(Mandatory=$true, ValueFromPipeline=$true, ValueFromPipelinebyPropertyName=$true)]
+        [System.String]
+        $PACKAGE_NAME,
+
+        [parameter(Mandatory = $false, ValueFromPipeline=$true, ValueFromPipelinebyPropertyName=$true)]
+        [ValidateSet("E", "W", "I", "D", "V")]
+        [string]
+        $LOG_LEVEL = "V",
+
+        [parameter(Mandatory=$false, ValueFromPipeline=$true, ValueFromPipelinebyPropertyName=$true)]
+        [switch]$CLEAR_LOG = $false
+    )
+
+
+
+    if ($CLEAR_LOG) {
+        adb -d logcat -c
+    }
+    
+    $pidStr = (adb shell ps | sls $PACKAGE_NAME).ToString().Split(" ", [System.StringSplitOptions]::RemoveEmptyEntries)[1]
+
+    write "PID : $pidStr start logcat ..."
+    write ""
+    write ""
+    write ""
+
+    adb -d logcat *:$LOG_LEVEL | sls $pidStr | 
+    foreach {
+        if ($_ -match "$pidStr\s\d*\sF") {
+            Write-Host $_ -ForegroundColor Red
+        } elseif ($_ -match "$pidStr\s\d*\sE") {
+            Write-Host $_ -ForegroundColor Red
+        } elseif ($_ -match "$pidStr\s\d*\sW") {
+            Write-Host $_ -ForegroundColor Yellow
+        } elseif ($_ -match "$pidStr\s\d*\sI") {
+            Write-Host $_ -ForegroundColor Green
+        } elseif ($_ -match "$pidStr\s\d*\sD") {
+            Write-Host $_ -ForegroundColor Gray
+        } elseif ($_ -match "$pidStr\s\d*\sV") {
+            Write-Host $_ -ForegroundColor White
+        } else {
+            Write-Host $_ -ForegroundColor White
+        }
+    }
+}
