@@ -2,7 +2,7 @@
 .SYNOPSIS
 .EXAMPLE
 #>
-function hhdandroid-install-apk
+function hhd-android-install-apk
 {
     [CmdletBinding()]
     param
@@ -21,7 +21,7 @@ function hhdandroid-install-apk
 .SYNOPSIS
 .EXAMPLE
 #>
-function hhdandroid-uninstall
+function hhd-android-uninstall
 {
     [CmdletBinding()]
     param
@@ -40,7 +40,7 @@ function hhdandroid-uninstall
 .SYNOPSIS
 .EXAMPLE
 #>
-function hhdandroid-packages-show-in-device
+function hhd-android-packages-show-in-device
 {
     [CmdletBinding()]
     param
@@ -56,7 +56,7 @@ function hhdandroid-packages-show-in-device
 .SYNOPSIS
 .EXAMPLE
 #>
-function hhdandroid-gradle-signing-report
+function hhd-android-gradle-signing-report
 {
     [CmdletBinding()]
     param
@@ -72,7 +72,7 @@ function hhdandroid-gradle-signing-report
 .SYNOPSIS
 .EXAMPLE
 #>
-function hhdandroid-gradle-clean
+function hhd-android-gradle-clean
 {
     [CmdletBinding()]
     param
@@ -89,7 +89,7 @@ function hhdandroid-gradle-clean
 .SYNOPSIS
 .EXAMPLE
 #>
-function hhdandroid-gradle-assemble-debug
+function hhd-android-gradle-assemble-debug
 {
     [CmdletBinding()]
     param
@@ -106,7 +106,7 @@ function hhdandroid-gradle-assemble-debug
 .SYNOPSIS
 .EXAMPLE
 #>
-function hhdandroid-gradle-assemble-release
+function hhd-android-gradle-assemble-release
 {
     [CmdletBinding()]
     param
@@ -123,7 +123,7 @@ function hhdandroid-gradle-assemble-release
 .SYNOPSIS
 .EXAMPLE
 #>
-function hhdandroid-keytool-generage
+function hhd-android-keytool-generage
 {
     [CmdletBinding()]
     param
@@ -147,7 +147,7 @@ function hhdandroid-keytool-generage
 .SYNOPSIS
 .EXAMPLE
 #>
-function hhdandroid-keytool-show-from-keystore-file
+function hhd-android-keytool-show-from-keystore-file
 {
     [CmdletBinding()]
     param
@@ -167,7 +167,7 @@ function hhdandroid-keytool-show-from-keystore-file
 .SYNOPSIS
 .EXAMPLE
 #>
-function hhdandroid-download-apk-from-device
+function hhd-android-download-apk-from-device
 {
     [CmdletBinding()]
     param
@@ -189,7 +189,7 @@ function hhdandroid-download-apk-from-device
 .EXAMPLE
     adb shell dumpsys package com.hhd2002.hhdtest
 #>
-function hhdandroid-adb-shell-dumpsys
+function hhd-android-adb-shell-dumpsys
 {
     [CmdletBinding()]
     param
@@ -212,7 +212,7 @@ function hhdandroid-adb-shell-dumpsys
     adb shell ls /storage/ -al
     adb shell ls /sdcard/Download/ -al
 #>
-function hhdandroid-adb-shell-ls-important
+function hhd-android-adb-shell-ls-important
 {
     [CmdletBinding()]
     param
@@ -240,7 +240,7 @@ function hhdandroid-adb-shell-ls-important
 .SYNOPSIS
 .EXAMPLE
 #>
-function hhdandroid-adb-file-copy-from-device
+function hhd-android-adb-file-copy-from-device
 {
     [CmdletBinding()]
     param
@@ -264,7 +264,7 @@ function hhdandroid-adb-file-copy-from-device
 .SYNOPSIS
 .EXAMPLE
 #>
-function hhdandroid-adb-file-copy-to-device
+function hhd-android-adb-file-copy-to-device
 {
     [CmdletBinding()]
     param
@@ -288,7 +288,7 @@ function hhdandroid-adb-file-copy-to-device
 .SYNOPSIS
 .EXAMPLE
 #>
-function hhdandroid-gradle-version
+function hhd-android-gradle-version
 {
     [CmdletBinding()]
     param
@@ -306,7 +306,7 @@ function hhdandroid-gradle-version
 .SYNOPSIS
 .EXAMPLE
 #>
-function hhdandroid-adb-logcat
+function hhd-android-adb-logcat
 {
     [CmdletBinding()]
     param
@@ -355,4 +355,26 @@ function hhdandroid-adb-logcat
             Write-Host $_ -ForegroundColor White
         }
     }
+}
+
+
+
+
+<#
+.SYNOPSIS
+.EXAMPLE
+#>
+function hhd-android-adb-start-app
+{
+    [CmdletBinding()]
+    param
+    (
+        [Parameter(Mandatory=$true, ValueFromPipeline=$true, ValueFromPipelinebyPropertyName=$true)]
+        [System.String]
+        $PACKAGE_NAME
+    )
+
+
+
+    adb shell monkey -p $PACKAGE_NAME 1
 }

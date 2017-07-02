@@ -1,7 +1,13 @@
 write "main start ..."
-write "OutputEncoding = UTF8 ..."
-$OutputEncoding = New-Object -TypeName System.Text.UTF8Encoding
-    
-write "Set-ExecutionPolicy Bypass ..."
-Set-ExecutionPolicy Bypass -Scope Process -Force
+write "OutputEncoding = [System.Text.Encoding]::UTF8 ..."
+$OutputEncoding = [System.Text.Encoding]::UTF8
+
+write "[System.Console]::OutputEncoding = [Text.UTF8Encoding]::UTF8 ..."
+git status
+[System.Console]::OutputEncoding = [Text.UTF8Encoding]::UTF8
+
+write "env:LC_ALL=C.UTF-8 ..."
 $env:LC_ALL="C.UTF-8"
+
+write "Set-ExecutionPolicy Bypass -Scope Process -Force ..."
+Set-ExecutionPolicy Bypass -Scope Process -Force

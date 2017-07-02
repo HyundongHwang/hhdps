@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
 .EXAMPLE
 #>
@@ -333,17 +333,18 @@ function hhdhtmldownloadimages
     (
         [Parameter(Mandatory=$true, ValueFromPipeline=$true, ValueFromPipelinebyPropertyName=$true)]
         [System.String]
-        $URL
+        $URL,
+
+        [Parameter(Mandatory=$true, ValueFromPipeline=$true, ValueFromPipelinebyPropertyName=$true)]
+        [System.String]
+        $PATTERN
     )
 
     $html = Invoke-WebRequest -Uri $URL -UseBasicParsing
 
     $html.Images.src |
     where {
-        $_ -like "*.jpg*"
-    } | 
-        where {
-        $_ -like "*/upload/NNEditor/*"
+        $_ -like "*$PATTERN*"
     } | 
     foreach {
         $imgUrl = $_
@@ -362,4 +363,36 @@ function hhdhtmldownloadimages
         write "$_ ..."
         Invoke-WebRequest -Uri $_ -OutFile $fileName
     }
+}
+
+
+<#
+.SYNOPSIS
+.EXAMPLE
+#>
+function hhd-dotnet-get-assembly-info
+{
+    [CmdletBinding()]
+    param
+    (
+        [Parameter(Mandatory=$true, ValueFromPipeline=$true, ValueFromPipelinebyPropertyName=$true)]
+        [System.String]
+        $DLL_PATH
+    )
+
+
+
+    write ""
+    write ""
+    write ""
+    write "----------------------------------------"
+    write "[System.Diagnostics.FileVersionInfo]::GetVersionInfo"
+    [System.Diagnostics.FileVersionInfo]::GetVersionInfo($DLL_PATH) | fl
+
+    write ""
+    write ""
+    write ""
+    write "----------------------------------------"
+    write "[System.Reflection.Assembly]::LoadFile"
+    [System.Reflection.Assembly]::LoadFile($DLL_PATH) | fl
 }
