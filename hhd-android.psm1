@@ -123,7 +123,7 @@ function hhd-android-gradle-assemble-release
 .SYNOPSIS
 .EXAMPLE
 #>
-function hhd-android-keytool-generage
+function hhd-android-keytool-generate
 {
     [CmdletBinding()]
     param
@@ -377,4 +377,23 @@ function hhd-android-adb-start-app
 
 
     adb shell monkey -p $PACKAGE_NAME 1
+}
+
+
+
+<#
+.SYNOPSIS
+.EXAMPLE
+#>
+function hhd-android-sdk-dir-ls
+{
+    [CmdletBinding()]
+    param
+    (
+    )
+
+
+
+    $sdkDir = (ls "~\AppData\Local\Android\sdk\platforms\" | sort -Descending -Property Name | select -First 1).FullName
+    ls $sdkDir -Recurse -Force | select FullName
 }
