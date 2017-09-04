@@ -2,7 +2,7 @@
 .SYNOPSIS
 .EXAMPLE
 #>
-function hhdvs2017openfile
+function hhd-vs2017-open-file
 {
     [CmdletBinding()]
     param
@@ -21,12 +21,12 @@ function hhdvs2017openfile
 .SYNOPSIS
 .EXAMPLE
 #>
-function hhdvs2017openhhdps
+function hhd-vs2017-open-hhdps
 {
     [CmdletBinding()]
     param
     (
     )
 
-    hhdvs2017openfile C:\hhdps
+    hhd-vs2017-openfile C:\hhdps
 }

@@ -2,7 +2,7 @@
 .SYNOPSIS
 .EXAMPLE
 #>
-function hhdcdaddpath
+function hhd-cd-add-path
 {
     [CmdletBinding()]
     param

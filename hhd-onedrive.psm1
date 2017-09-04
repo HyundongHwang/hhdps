@@ -2,7 +2,7 @@
 .SYNOPSIS
 .EXAMPLE
 #>
-function hhdonedriveupload
+function hhd-onedrive-upload
 {
     [CmdletBinding()]
     param
@@ -12,7 +12,7 @@ function hhdonedriveupload
         $filePath
     )
 
-    hhdmoduleinstallimport -MODULE_NAME OneDrive
+    hhd-module-install-import -MODULE_NAME OneDrive
 
     $authRes = Get-ODAuthentication -ClientID "00000000401C7029"
     $uploadRes = Add-ODItem -AccessToken $authRes.access_token -Path "/publish" -LocalFile $filePath

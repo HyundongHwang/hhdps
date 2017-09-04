@@ -2,7 +2,7 @@
 .SYNOPSIS
 .EXAMPLE
 #>
-function hhdgitgraph
+function hhd-git-graph
 {
     [CmdletBinding()]
     param
@@ -18,7 +18,7 @@ function hhdgitgraph
 .SYNOPSIS
 .EXAMPLE
 #>
-function hhdgitposhinit
+function hhd-git-posh-init
 {
     write "change prompt ..."
 
@@ -31,7 +31,7 @@ function hhdgitposhinit
     {
         write "this is normal environment !!!"
         write "import module posh-git ..."
-        hhdmoduleinstallimport -MODULE_NAME posh-git
+        hhd-module-install-import -MODULE_NAME posh-git
 
         function global:prompt 
         {
@@ -50,7 +50,7 @@ function hhdgitposhinit
 .SYNOPSIS
 .EXAMPLE
 #>
-function hhdgitstashsave
+function hhd-git-stash-save
 {
     [CmdletBinding()]
     param
@@ -60,13 +60,8 @@ function hhdgitstashsave
         $stashName
     )
 
-    Read-Host "git status ..."
     git status
-    
-    Read-Host "git stash list ..."
     git stash list
-
-    Read-Host "git stash save -u `"$stashName`" ..."
     git stash save -u "$stashName"
 }
 
@@ -76,7 +71,7 @@ function hhdgitstashsave
 .SYNOPSIS
 .EXAMPLE
 #>
-function hhdgitstashapply
+function hhd-git-stash-apply
 {
     [CmdletBinding()]
     param
@@ -86,20 +81,15 @@ function hhdgitstashapply
         $stashNumber
     )
 
-    Read-Host "git status ..."
-    git status
-    
-    Read-Host "git stash list ..."
+    git status  
     git stash list
 
     if ($stashName -eq "") 
     {
-        Read-Host "git stash pop ..."
         git stash pop
     }
     else 
     {
-        Read-Host "git stash apply `"stash@{$stashNumber}`" ..."
         git stash apply "stash@{$stashNumber}"
     }
 }
@@ -110,7 +100,7 @@ function hhdgitstashapply
 .SYNOPSIS
 .EXAMPLE
 #>
-function hhdgitaddcommitpush
+function hhd-git-add-commit-push
 {
     [CmdletBinding()]
     param
@@ -120,10 +110,7 @@ function hhdgitaddcommitpush
         $commitMsg
     )
 
-    Read-Host "git status ..."
     git status
-    
-    Read-Host "git add * ..."
     git add *
 
     if ($commitMsg -eq "") 
@@ -131,13 +118,8 @@ function hhdgitaddcommitpush
         $commitMsg = "modify"
     }
 
-    Read-Host "git commit -m `"$commitMsg`" ..."
     git commit -m "$commitMsg"
-
-    Read-Host "git pull ..."
     git pull
-
-    Read-Host "git push ..."
     git push
 }
 
@@ -147,7 +129,7 @@ function hhdgitaddcommitpush
 .SYNOPSIS
 .EXAMPLE
 #>
-function hhdgitresetclean
+function hhd-git-reset-clean
 {
     [CmdletBinding()]
     param
@@ -164,7 +146,7 @@ function hhdgitresetclean
 .SYNOPSIS
 .EXAMPLE
 #>
-function hhdinstallgit
+function hhd-install-git
 {
     [CmdletBinding()]
     param

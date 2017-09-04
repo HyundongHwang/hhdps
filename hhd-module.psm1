@@ -2,7 +2,7 @@
 .SYNOPSIS
 .EXAMPLE
 #>
-function hhdmoduleinstallimport
+function hhd-module-install-import
 {
     [CmdletBinding()]
     param
@@ -32,7 +32,7 @@ function hhdmoduleinstallimport
 .SYNOPSIS
 .EXAMPLE
 #>
-function hhdmoduleloadfromdll
+function hhd-module-load-from-dll
 {
     [CmdletBinding()]
     param
@@ -58,7 +58,7 @@ function hhdmoduleloadfromdll
 .SYNOPSIS
 .EXAMPLE
 #>
-function hhdnugetrestore
+function hhd-nuget-restore
 {
     [CmdletBinding()]
     param

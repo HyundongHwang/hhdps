@@ -2,7 +2,7 @@
 .SYNOPSIS
 .EXAMPLE
 #>
-function hhdps
+function hhd-ps
 {
     [CmdletBinding()]
     param
@@ -18,7 +18,7 @@ function hhdps
 .SYNOPSIS
 .EXAMPLE
 #>
-function hhdkillallpowershellwithoutme
+function hhd-kill-all-powershell-without-me
 {
     [CmdletBinding()]
     param
@@ -35,7 +35,7 @@ function hhdkillallpowershellwithoutme
 .SYNOPSIS
 .EXAMPLE
 #>
-function hhdkill
+function hhd-kill
 {
     [CmdletBinding()]
     param
@@ -54,13 +54,13 @@ function hhdkill
 .SYNOPSIS
 .EXAMPLE
 #>
-function hhdkillvsgarbage
+function hhd-kill-vs-garbage
 {
     [CmdletBinding()]
     param
     (
     )
 
-    hhdkill -processName vshub
-    hhdkill -processName msbuild
+    hhd-kill -processName vshub
+    hhd-kill -processName msbuild
 }

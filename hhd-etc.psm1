@@ -49,7 +49,7 @@ function mycomplexfunc
 .SYNOPSIS
 .EXAMPLE
 #>
-function hhdnetworkgetpubip
+function hhd-network-get-pub-ip
 {
     [CmdletBinding()]
     param
@@ -66,7 +66,7 @@ function hhdnetworkgetpubip
 .SYNOPSIS
 .EXAMPLE
 #>
-function hhdwmigetprogram
+function hhd-wmi-get-program
 {
     [CmdletBinding()]
     param
@@ -82,7 +82,7 @@ function hhdwmigetprogram
 .SYNOPSIS
 .EXAMPLE
 #>
-function hhdgcmgetscriptcontent
+function hhd-gcm-get-script-content
 {
     [CmdletBinding()]
     param
@@ -101,7 +101,7 @@ function hhdgcmgetscriptcontent
 .SYNOPSIS
 .EXAMPLE
 #>
-function hhdfileappendtime
+function hhd-file-append-time
 {
     [CmdletBinding()]
     param
@@ -168,7 +168,7 @@ function hhdfileappendtime
 .SYNOPSIS
 .EXAMPLE
 #>
-function hhdfilewritefortest
+function hhd-file-write-for-test
 {
     [CmdletBinding()]
     param
@@ -187,7 +187,7 @@ function hhdfilewritefortest
 .SYNOPSIS
 .EXAMPLE
 #>
-function hhdnetworkgetipmacaddress
+function hhd-network-get-ip-mac-address
 {
     [CmdletBinding()]
     param
@@ -206,7 +206,7 @@ function hhdnetworkgetipmacaddress
 .SYNOPSIS
 .EXAMPLE
 #>
-function hhdimagegetwin10spotlightlockscreen
+function hhd-image-get-win10-spotlight-lock-screen
 {
     [CmdletBinding()]
     param
@@ -228,7 +228,7 @@ function hhdimagegetwin10spotlightlockscreen
 .SYNOPSIS
 .EXAMPLE
 #>
-function hhdcertfromwebsite
+function hhd-cert-from-website
 {
     [CmdletBinding()]
     param
@@ -253,7 +253,7 @@ function hhdcertfromwebsite
 .SYNOPSIS
 .EXAMPLE
 #>
-function hhdpathset
+function hhd-path-set
 {
     [CmdletBinding()]
     param
@@ -278,7 +278,7 @@ function hhdpathset
 .SYNOPSIS
 .EXAMPLE
 #>
-function hhdstoragesubdir
+function hhd-storage-sub-dir
 {
     [CmdletBinding()]
     param
@@ -290,7 +290,7 @@ function hhdstoragesubdir
 
     ls $DIR -Directory |
     foreach {
-        $res = hhdstoragedir -DIR $_.FullName
+        $res = hhd-storage-dir -DIR $_.FullName
         return $res
     }
 }
@@ -301,7 +301,7 @@ function hhdstoragesubdir
 .SYNOPSIS
 .EXAMPLE
 #>
-function hhdstoragedir
+function hhd-storage-dir
 {
     [CmdletBinding()]
     param
@@ -326,7 +326,7 @@ function hhdstoragedir
 .SYNOPSIS
 .EXAMPLE
 #>
-function hhdhtmldownloadimages
+function hhd-html-download-images
 {
     [CmdletBinding()]
     param

@@ -2,7 +2,7 @@
 .SYNOPSIS
 .EXAMPLE
 #>
-function hhdazureloginauto
+function hhd-azure-login-auto
 {
     [CmdletBinding()]
     param
@@ -25,7 +25,7 @@ function hhdazureloginauto
 .SYNOPSIS
 .EXAMPLE
 #>
-function hhdazurecurrent
+function hhd-azure-current
 {
     [CmdletBinding()]
     param
@@ -43,7 +43,7 @@ function hhdazurecurrent
 
     write "azure sql database check ..."
     pause
-    Get-AzureSqlDatabaseServer | Get-AzureSqlDatabase | hhdazuresqldatabasedetail
+    Get-AzureSqlDatabaseServer | Get-AzureSqlDatabase | hhd-azure-sql-database-detail
 
     write "azure storage account check ..."
     pause
@@ -60,7 +60,7 @@ function hhdazurecurrent
 .SYNOPSIS
 .EXAMPLE
 #>
-function hhdazurestartallwebsite
+function hhd-azure-start-all-website
 {
     [CmdletBinding()]
     param
@@ -83,7 +83,7 @@ function hhdazurestartallwebsite
 .SYNOPSIS
 .EXAMPLE
 #>
-function hhdazurestopallwebsite
+function hhd-azure-stop-all-website
 {
     [CmdletBinding()]
     param
@@ -106,7 +106,7 @@ function hhdazurestopallwebsite
 .SYNOPSIS
 .EXAMPLE
 #>
-function hhdazuregetwebsiteloghhdyidbot
+function hhd-azure-get-website-log-hhdyidbot
 {
     [CmdletBinding()]
     param
@@ -122,7 +122,7 @@ function hhdazuregetwebsiteloghhdyidbot
 .SYNOPSIS
 .EXAMPLE
 #>
-function hhdazuresqldatabasedetail
+function hhd-azure-sql-database-detail
 {
     [CmdletBinding()]
     param
@@ -167,7 +167,7 @@ function hhdazuresqldatabasedetail
 .SYNOPSIS
 .EXAMPLE
 #>
-function hhdazurestorageuploadfile
+function hhd-azure-storage-upload-file
 {
     [CmdletBinding()]
     param
@@ -284,7 +284,7 @@ function hhdazurestorageuploadfile
 .SYNOPSIS
 .EXAMPLE
 #>
-function hhdazurelogin
+function hhd-azure-login
 {
     [CmdletBinding()]
     param

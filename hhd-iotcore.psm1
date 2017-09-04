@@ -1,9 +1,9 @@
 <#
 .SYNOPSIS
 .EXAMPLE
-    hhdiotconnect -servername "minwinpc" -password "p@ssw0rd"
+    hhd-iot-connect -servername "minwinpc" -password "p@ssw0rd"
 #>
-function hhdiotconnect
+function hhd-iot-connect
 {
     [CmdletBinding()]
     param
@@ -36,14 +36,14 @@ function hhdiotconnect
 .SYNOPSIS
 .EXAMPLE
 #>
-function hhdiotconnectminwinpc
+function hhd-iot-connect-minwinpc
 {
     [CmdletBinding()]
     param
     (
     )
 
-    hhdiotconnect -servername "minwinpc" -password "p@ssw0rd"
+    hhd-iot-connect -servername "minwinpc" -password "p@ssw0rd"
 }
 
 
@@ -52,14 +52,14 @@ function hhdiotconnectminwinpc
 .SYNOPSIS
 .EXAMPLE
 #>
-function hhdiotconnectfirstrp3
+function hhd-iot-connect-firstrp3
 {
     [CmdletBinding()]
     param
     (
     )
 
-    hhdiotconnect -servername "firstrp3" -password "p@ssw0rd"
+    hhd-iot-connect -servername "firstrp3" -password "p@ssw0rd"
 }
 
 
@@ -68,7 +68,7 @@ function hhdiotconnectfirstrp3
 .SYNOPSIS
 .EXAMPLE
 #>
-function hhdiotmountdrivefirstrp3
+function hhd-iot-mount-drive-firstrp3
 {
     [CmdletBinding()]
     param

@@ -6,7 +6,6 @@ sal vs2017 "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Commo
 sal vs2017p "C:\Program Files (x86)\Microsoft Visual Studio\Preview\Professional\Common7\IDE\devenv.com"
 sal blend2013 "C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\IDE\blend.exe"
 sal blend2015 "C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\blend.exe"
-sal nuget "C:\ProgramData\Microsoft\Windows\PowerShell\PowerShellGet\NuGet.exe"
 sal java "C:\Program Files (x86)\Java\jdk1.7.0_55\bin\java.exe"
 sal javac "C:\Program Files (x86)\Java\jdk1.7.0_55\bin\javac.exe"
 sal apt "C:\Program Files (x86)\Java\jdk1.7.0_55\bin\apt.exe"
@@ -85,9 +84,3 @@ sal spyxx-chm 'C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\Tools
 
 sal zip Compress-Archive
 sal unzip Expand-Archive
-
-
-
-sal hhdopen hhdvs2017openfile
-sal hhdupload hhdazurestorageuploadfile
-sal hhdopenhhdps hhdvs2017openhhdps
