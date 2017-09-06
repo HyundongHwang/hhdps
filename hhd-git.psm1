@@ -57,12 +57,12 @@ function hhd-git-stash-save
     (
         [Parameter(Mandatory=$false, ValueFromPipeline=$true, ValueFromPipelinebyPropertyName=$true)]
         [System.String]
-        $stashName
+        $STASH_NAME
     )
 
     git status
     git stash list
-    git stash save -u "$stashName"
+    git stash save -u "$STASH_NAME"
 }
 
 
@@ -78,19 +78,19 @@ function hhd-git-stash-apply
     (
         [Parameter(Mandatory=$false, ValueFromPipeline=$true, ValueFromPipelinebyPropertyName=$true)]
         [System.Int32]
-        $stashNumber
+        $STASH_NUMBER
     )
 
     git status  
     git stash list
 
-    if ($stashName -eq "") 
+    if ($STASH_NAME -eq "") 
     {
         git stash pop
     }
     else 
     {
-        git stash apply "stash@{$stashNumber}"
+        git stash apply "stash@{$STASH_NUMBER}"
     }
 }
 
@@ -107,18 +107,18 @@ function hhd-git-add-commit-push
     (
         [Parameter(Mandatory=$false, ValueFromPipeline=$true, ValueFromPipelinebyPropertyName=$true)]
         [System.String]
-        $commitMsg
+        $COMMIT_MSG
     )
 
     git status
     git add *
 
-    if ($commitMsg -eq "") 
+    if ($COMMIT_MSG -eq "") 
     {
-        $commitMsg = "modify"
+        $COMMIT_MSG = "modify"
     }
 
-    git commit -m "$commitMsg"
+    git commit -m "$COMMIT_MSG"
     git pull
     git push
 }

@@ -65,8 +65,8 @@ function hhd-nuget-restore
     (
         [Parameter(Mandatory=$true, ValueFromPipeline=$true, ValueFromPipelinebyPropertyName=$true)]
         [System.IO.FileInfo]
-        $slnfile
+        $SLN_FILE
     )
 
-    nuget restore -SolutionDirectory $slnfile.FullName -PackagesDirectory packages
+    nuget restore -SolutionDirectory $SLN_FILE.FullName -PackagesDirectory packages
 }

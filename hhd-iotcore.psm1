@@ -10,24 +10,24 @@ function hhd-iot-connect
     (
         [Parameter(Mandatory=$true, ValueFromPipeline=$true, ValueFromPipelinebyPropertyName=$true)]
         [System.String]
-        $servername,
+        $SERVER_NAME,
 
         [Parameter(Mandatory=$true, ValueFromPipeline=$true, ValueFromPipelinebyPropertyName=$true)]
         [System.String]
-        $password
+        $PASSWORD
     )
 
     write "start winrm service ..."
     net start winrm
 
     write "add TrustedHosts ..."
-    Set-Item WSMan:\localhost\Client\TrustedHosts -Value $servername
+    Set-Item WSMan:\localhost\Client\TrustedHosts -Value $SERVER_NAME
 
-    $passwordEnc = ConvertTo-SecureString $password -AsPlainText -Force
-    $cred = New-Object System.Management.Automation.PSCredential("$servername\administrator", $passwordEnc)
+    $passwordEnc = ConvertTo-SecureString $PASSWORD -AsPlainText -Force
+    $cred = New-Object System.Management.Automation.PSCredential("$SERVER_NAME\administrator", $passwordEnc)
 
     write "enter pssession ..."
-    Enter-PSSession -ComputerName $servername -Credential $cred
+    Enter-PSSession -ComputerName $SERVER_NAME -Credential $cred
 }
 
 
@@ -76,10 +76,10 @@ function hhd-iot-mount-drive-firstrp3
     )
 
     write "
-`$servername = `"firstrp2`"
-`$password = `"password`"
-`$passwordEnc = ConvertTo-SecureString `$password -AsPlainText -Force
-`$cred = New-Object System.Management.Automation.PSCredential(`"`$servername\administrator`", `$passwordEnc)
-New-PSDrive -Name iot -PSProvider FileSystem -Root \\`$servername\c$ -Credential `$cred
+`$SERVER_NAME = `"firstrp2`"
+`$PASSWORD = `"password`"
+`$passwordEnc = ConvertTo-SecureString `$PASSWORD -AsPlainText -Force
+`$cred = New-Object System.Management.Automation.PSCredential(`"`$SERVER_NAME\administrator`", `$passwordEnc)
+New-PSDrive -Name iot -PSProvider FileSystem -Root \\`$SERVER_NAME\c$ -Credential `$cred
     ";
 }

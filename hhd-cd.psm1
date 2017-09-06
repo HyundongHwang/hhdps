@@ -9,18 +9,18 @@ function hhd-cd-add-path
     (
         [Parameter(Mandatory=$true, ValueFromPipeline=$true, ValueFromPipelinebyPropertyName=$true)]
         [System.String]
-        $name,
+        $NAME,
 
         [Parameter(Mandatory=$true, ValueFromPipeline=$true, ValueFromPipelinebyPropertyName=$true)]
         [System.String]
-        $path
+        $PATH
     )
 
-    $g_hhdFavList | ? {$_.name -eq $name} | set rmList
+    $g_hhdFavList | ? {$_.name -eq $NAME} | set rmList
     $rmList | % { $g_hhdFavList.Remove($_) }
     $newObj = New-Object psobject
-    $newObj | Add-Member -Name name -Value $name -MemberType NoteProperty
-    $newObj | Add-Member -Name path -Value $path -MemberType NoteProperty
+    $newObj | Add-Member -Name name -Value $NAME -MemberType NoteProperty
+    $newObj | Add-Member -Name path -Value $PATH -MemberType NoteProperty
     $g_hhdFavList.Add($newObj)
     $g_hhdFavList | ConvertTo-Json | Out-File -FilePath ~/hhdFavList.json
 }

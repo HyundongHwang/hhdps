@@ -42,10 +42,10 @@ function hhd-kill
     (
         [Parameter(Mandatory=$false, ValueFromPipeline=$true, ValueFromPipelinebyPropertyName=$true)]
         [System.String[]]
-        $processNameList
+        $PROCESS_NAME_LIST
     )
 
-    $processNameList | % { ps "*$_*" } | % { taskkill /PID $_.id /T /F }
+    $PROCESS_NAME_LIST | % { ps "*$_*" } | % { taskkill /PID $_.id /T /F }
 }
 
 
