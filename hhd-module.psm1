@@ -15,14 +15,14 @@ function hhd-module-install-import
     if((Get-InstalledModule -name $MODULE_NAME).count -eq 0)
     {
         write "install $MODULE_NAME ..."
-        Install-Package $MODULE_NAME -Force -AllowClobber
+        Install-Module $MODULE_NAME -Force -AllowClobber
     }
     else 
     {
         write "$MODULE_NAME already installed !!!"
     }
 
-    write "import $MODULE_NAME ..."
+    write "$MODULE_NAME import ..."
     Import-Module $MODULE_NAME -Force
 }
 
