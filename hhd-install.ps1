@@ -8,11 +8,6 @@ ls "$PSSCRIPTROOT_RESOLVED\*.psm1" |
     write "`$(`$_.Name) load ..."
     Import-Module `$_.FullName -Force -WarningAction Ignore
 }
-
-ls "$PSSCRIPTROOT_RESOLVED\*securekeys*.ps1" |
-% { 
-    . `$_.FullName
-}
 "@
 
 if(!(Test-Path $PROFILE_PATH))
