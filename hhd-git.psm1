@@ -295,3 +295,51 @@ function hhd-git-colored-output
 
 
 }
+
+
+
+<#
+.SYNOPSIS
+.EXAMPLE
+#>
+function hhd-git-set-upstream
+{
+    [CmdletBinding()]
+    param
+    (
+        [Parameter(Mandatory=$true, ValueFromPipeline=$true, ValueFromPipelinebyPropertyName=$true)]
+        [System.Object]
+        $UPSTREAM_GIT_URL
+    )
+
+    git remote remove upstream
+    git remote add upstream $UPSTREAM_GIT_URL
+    git remote -v
+}
+
+
+
+<#
+.SYNOPSIS
+.EXAMPLE
+#>
+function hhd-git-sync-upstream
+{
+    [CmdletBinding()]
+    param
+    (
+    )
+
+    $remoteList = git remote -v
+
+    if (($remoteList -like "*upstream*").Count -eq 0) 
+    {
+        Write-Error "no upstream repo !!!"
+        Write-Error "hhd-git-set-upstream first ..."
+        return
+    }
+
+
+
+    git merge upstream/master
+}
