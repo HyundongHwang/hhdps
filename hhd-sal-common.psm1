@@ -1,4 +1,4 @@
-sal code "C:\Program Files (x86)\Microsoft VS Code\Code.exe"
+sal code "C:\Program Files\Microsoft VS Code\Code.exe"
 sal open "C:\Windows\SysWOW64\explorer.exe"
 sal vs2013 "C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\IDE\devenv.com"
 sal vs2015 "C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\devenv.com"

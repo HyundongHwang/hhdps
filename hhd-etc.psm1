@@ -253,23 +253,34 @@ function hhd-cert-from-website
 .SYNOPSIS
 .EXAMPLE
 #>
+function hhd-path-get
+{
+    [CmdletBinding()]
+    param
+    (
+    )
+    
+    (cat Env:\Path) -split ";" | sort | Out-File "~/.temp-system-path"
+    code.cmd (Resolve-Path "~/.temp-system-path")
+}
+
+
+
+
+<#
+.SYNOPSIS
+.EXAMPLE
+#>
 function hhd-path-set
 {
     [CmdletBinding()]
     param
     (
-        [Parameter(Mandatory=$true, ValueFromPipeline=$true, ValueFromPipelinebyPropertyName=$true)]
-        [System.String]
-        $PATH_TO_ADD
     )
 
-    if ($env:Path -like "*$PATH_TO_ADD*")
-    {
-        write "already added !!!"
-        return
-    }
-    
-    setx PATH "$env:path;$PATH_TO_ADD" /M
+    $newPath = cat "~/.temp-system-path"
+    $newPath = $newPath -join ";"
+    setx PATH "$newPath" /M
 }
 
 
@@ -1221,4 +1232,59 @@ function hhd-convertto-ascii-art
     }
     end {
     }
+}
+
+
+
+<#
+.SYNOPSIS
+.EXAMPLE
+#>
+function hhd-com-show-registry
+{
+    [CmdletBinding()]
+    param
+    (
+        [Parameter(Mandatory=$true, ValueFromPipeline=$true, ValueFromPipelinebyPropertyName=$true)]
+        [System.String]
+        $CLASS_NAME_FILTER
+    )
+
+
+
+	New-PSDrive -Name HKCR -PSProvider Registry -Root HKEY_CLASSES_ROOT
+	$regResult = ls HKCR:/*$CLASS_NAME_FILTER*
+	$wow64PathList = New-Object System.Collections.ArrayList
+
+	$regResult | 
+	foreach {
+		$className = $_.Name -replace "HKEY_CLASSES_ROOT", "HKCR:"
+		$uuid = Get-ItemPropertyValue $className\CLSID -Name "(default)"
+		$wow64Path = "HKCR:\WOW6432Node\CLSID\$uuid\"
+		$_unused = $wow64PathList.Add($wow64Path)
+
+		$obj = New-Object -typename PSObject
+		$obj | Add-Member -MemberType NoteProperty -Name ClassName -Value $className
+		$obj | Add-Member -MemberType NoteProperty -Name UUID -Value $uuid
+		$obj | Add-Member -MemberType NoteProperty -Name WowPath -Value $wow64Path
+		return $obj
+	} | 
+	Out-Host
+
+
+
+	$res = Read-Host "show detail dll path? (y/n)"
+
+	if ($res -ne "y") 
+	{
+		return
+	}
+
+
+
+	# ls "HKCR:\WOW6432Node\CLSID\{9B2BE728-5335-348E-8913-C58E05331481}\InprocServer32\"
+	$wow64PathList | 
+	ls | 
+	Out-Host
+
 }
