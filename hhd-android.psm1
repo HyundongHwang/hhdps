@@ -166,6 +166,8 @@ function hhd-android-keytool-show-from-keystore-file
 <#
 .SYNOPSIS
 .EXAMPLE
+	hhd-android-download-apk-from-device
+	adb shell pm list packages -f -3
 #>
 function hhd-android-download-apk-from-device
 {
