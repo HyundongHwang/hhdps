@@ -399,3 +399,21 @@ function hhd-android-sdk-dir-ls
     $sdkDir = (ls "~\AppData\Local\Android\sdk\platforms\" | sort -Descending -Property Name | select -First 1).FullName
     ls $sdkDir -Recurse -Force | select FullName
 }
+
+
+
+
+<#
+.SYNOPSIS
+.EXAMPLE
+#>
+function hhd-android-cleanup-build-process
+{
+    [CmdletBinding()]
+    param
+    (
+    )
+
+	ps ninja, adb, java, cmake, clang* | kill -Force
+	return $obj;
+}

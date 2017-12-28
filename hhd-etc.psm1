@@ -280,7 +280,7 @@ function hhd-path-set
 
     $newPath = cat "~/.temp-system-path"
     $newPath = $newPath -join ";"
-    setx PATH "$newPath" /M
+    setx /M PATH "$newPath"
 }
 
 
