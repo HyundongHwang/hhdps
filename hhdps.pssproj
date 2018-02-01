@@ -40,8 +40,6 @@
     <Compile Include="hhd-module.psm1" />
     <Compile Include="hhd-onedrive.psm1" />
     <Compile Include="hhd-process.psm1" />
-    <Compile Include="hhd-sal-common.psm1" />
-    <Compile Include="hhd-sal-hhdcommand.psm1" />
     <Compile Include="hhd-visual-studio.psm1" />
     <Compile Include="temp.ps1" />
   </ItemGroup>

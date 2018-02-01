@@ -18,6 +18,11 @@ Set-ExecutionPolicy Bypass -Scope Process -Force
 $env:Path = "
 $env:Path;
 
+C:\Users\hhd20\AppData\Local\Android\Sdk\platform-tools;
+
+C:\Users\hhd20\AppData\Local\Programs\Python\Python36;
+C:\Users\hhd20\AppData\Local\Programs\Python\Python36\Scripts;
+
 C:\Windows\Boot\PCAT;
 C:\Windows\ImmersiveControlPanel;
 C:\Windows\Microsoft.NET\Framework64\v4.0.30319;
@@ -68,9 +73,6 @@ C:\Program Files (x86)\Microsoft Visual Studio\Preview\Community\MSBuild\Microso
 C:\Program Files (x86)\Microsoft Visual Studio\Preview\Community\Team Tools\Performance Tools;
 C:\Program Files (x86)\Microsoft Visual Studio\Preview\Community\VC\Tools\MSVC\14.12.25816\bin\Hostx64\x64;
 C:\Program Files (x86)\Microsoft Visual Studio\Preview\Community\VSSDK\VisualStudioIntegration\Tools\Bin;
-C:\Program Files (x86)\Microsoft Visual Studio\Shared\Anaconda3_64\Library\bin;
-C:\Program Files (x86)\Microsoft Visual Studio\Shared\Anaconda3_64\Scripts;
-C:\Program Files (x86)\Microsoft Visual Studio\Shared\Anaconda3_64;
 C:\Program Files (x86)\Microsoft Visual Studio\Shared\Common\VSPerfCollectionTools\x64;
 C:\Program Files (x86)\Windows Kits\10\bin\x64;
 C:\Program Files (x86)\Windows Mail;
