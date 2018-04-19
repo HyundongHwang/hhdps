@@ -366,12 +366,12 @@ function hhd-git-clone
     {
         Write-Host "--------------------------------------------------------------------------------"
         Write-Host "URL : $URL"
-        git clone $_ temp
+        git clone $URL temp
         cd temp
         [string]$line = (git log --reverse --date=format:"%y%m%d" | sls "Date:")[0]
         [string]$dateyymmdd = $line.Split(" ", [System.StringSplitOptions]::RemoveEmptyEntries)[1]
-        $idx = $_.IndexOf("/")
-        [string]$projName = $_.Substring($idx + 1, $_.Length - $idx - 5)
+        $idx = $URL.IndexOf("/")
+        [string]$projName = $URL.Substring($idx + 1, $URL.Length - $idx - 5)
         [string]$newDirName = "$($dateyymmdd)_$($projName)"
         cd ..
         Write-Host "newDirName : $($newDirName)"
