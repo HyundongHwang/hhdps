@@ -343,3 +343,43 @@ function hhd-git-sync-upstream
 
     git merge upstream/master
 }
+
+
+
+
+
+<#
+.SYNOPSIS
+.EXAMPLE
+#>
+function hhd-git-clone
+{
+    [CmdletBinding()]
+    param
+    (
+        [Parameter(Mandatory=$true, ValueFromPipeline=$true, ValueFromPipelinebyPropertyName=$true)]
+        [System.String]
+        $URL
+    )
+
+    process 
+    {
+        Write-Host "--------------------------------------------------------------------------------"
+        Write-Host "URL : $URL"
+        git clone $_ temp
+        cd temp
+        [string]$line = (git log --reverse --date=format:"%y%m%d" | sls "Date:")[0]
+        [string]$dateyymmdd = $line.Split(" ", [System.StringSplitOptions]::RemoveEmptyEntries)[1]
+        $idx = $_.IndexOf("/")
+        [string]$projName = $_.Substring($idx + 1, $_.Length - $idx - 5)
+        [string]$newDirName = "$($dateyymmdd)_$($projName)"
+        cd ..
+        Write-Host "newDirName : $($newDirName)"
+        mv temp $newDirName
+
+        $obj = New-Object -typename PSObject
+        $obj | Add-Member -MemberType NoteProperty -Name "url" -Value $URL
+        $obj | Add-Member -MemberType NoteProperty -Name "dir" -Value $newDirName
+        return $obj;
+    }
+}
