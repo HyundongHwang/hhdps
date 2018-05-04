@@ -2,7 +2,7 @@ write "main start ..."
 write "OutputEncoding = [System.Text.Encoding]::UTF8 ..."
 $OutputEncoding = [System.Text.Encoding]::UTF8
 
-# powershell_ise ?êÏÑú ?§Ìñâ?úÎã§Î©??ÑÏöî??Íµ¨Î¨∏?¥Îã§.
+# powershell_ise
 # write "[System.Console]::OutputEncoding = [Text.UTF8Encoding]::UTF8 ..."
 # git status
 # [System.Console]::OutputEncoding = [Text.UTF8Encoding]::UTF8
@@ -10,8 +10,29 @@ $OutputEncoding = [System.Text.Encoding]::UTF8
 write "env:LC_ALL=C.UTF-8 ..."
 $env:LC_ALL="C.UTF-8"
 
-write "Set-ExecutionPolicy Bypass -Scope Process -Force ..."
-Set-ExecutionPolicy Bypass -Scope Process -Force
+
+
+<#
+.SYNOPSIS
+.EXAMPLE
+#>
+function hhd-resolve-path {
+    [CmdletBinding()]
+    param
+    (
+        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ValueFromPipelinebyPropertyName = $true)]
+        [string]
+        $PATH
+    )
+
+    process {
+        if (!(Test-Path $PATH)) {
+            return $null 
+        }
+
+        return (Resolve-Path $PATH)
+    }
+}
 
 
 
@@ -95,6 +116,10 @@ C:\hhdcommand\dbeaver;
 C:\hhdcommand\dbgview;
 C:\hhdcommand\depends;
 
-$(Resolve-Path ~\AppData\Local\JetBrains\Installations\dotPeek11);
-$(Resolve-Path ~\AppData\Local\Programs\Python\Python36-32);
+$(hhd-resolve-path ~\AppData\Local\JetBrains\Installations\dotPeek11);
+$(hhd-resolve-path ~\AppData\Local\Programs\Python\Python36-32);
+$(hhd-resolve-path ~\AppData\Local\Android\Sdk\platform-tools);
 "
+
+
+
