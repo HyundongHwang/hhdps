@@ -2,12 +2,11 @@
 .SYNOPSIS
 .EXAMPLE
 #>
-function hhd-android-install-apk
-{
+function hhd-android-install-apk {
     [CmdletBinding()]
     param
     (
-        [Parameter(Mandatory=$true, ValueFromPipeline=$true, ValueFromPipelinebyPropertyName=$true)]
+        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ValueFromPipelinebyPropertyName = $true)]
         [System.String]
         $APK_PATH
     )
@@ -21,12 +20,11 @@ function hhd-android-install-apk
 .SYNOPSIS
 .EXAMPLE
 #>
-function hhd-android-uninstall
-{
+function hhd-android-uninstall {
     [CmdletBinding()]
     param
     (
-        [Parameter(Mandatory=$true, ValueFromPipeline=$true, ValueFromPipelinebyPropertyName=$true)]
+        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ValueFromPipelinebyPropertyName = $true)]
         [System.String]
         $PACKAGE_NAME
     )
@@ -40,8 +38,7 @@ function hhd-android-uninstall
 .SYNOPSIS
 .EXAMPLE
 #>
-function hhd-android-packages-show-in-device
-{
+function hhd-android-packages-show-in-device {
     [CmdletBinding()]
     param
     (
@@ -56,8 +53,7 @@ function hhd-android-packages-show-in-device
 .SYNOPSIS
 .EXAMPLE
 #>
-function hhd-android-gradle-signing-report
-{
+function hhd-android-gradle-signing-report {
     [CmdletBinding()]
     param
     (
@@ -72,8 +68,7 @@ function hhd-android-gradle-signing-report
 .SYNOPSIS
 .EXAMPLE
 #>
-function hhd-android-gradle-clean
-{
+function hhd-android-gradle-clean {
     [CmdletBinding()]
     param
     (
@@ -89,8 +84,7 @@ function hhd-android-gradle-clean
 .SYNOPSIS
 .EXAMPLE
 #>
-function hhd-android-gradle-assemble-debug
-{
+function hhd-android-gradle-assemble-debug {
     [CmdletBinding()]
     param
     (
@@ -106,8 +100,7 @@ function hhd-android-gradle-assemble-debug
 .SYNOPSIS
 .EXAMPLE
 #>
-function hhd-android-gradle-assemble-release
-{
+function hhd-android-gradle-assemble-release {
     [CmdletBinding()]
     param
     (
@@ -123,16 +116,15 @@ function hhd-android-gradle-assemble-release
 .SYNOPSIS
 .EXAMPLE
 #>
-function hhd-android-keytool-generate
-{
+function hhd-android-keytool-generate {
     [CmdletBinding()]
     param
     (
-        [Parameter(Mandatory=$true, ValueFromPipeline=$true, ValueFromPipelinebyPropertyName=$true)]
+        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ValueFromPipelinebyPropertyName = $true)]
         [System.String]
         $KEYSTORE_PATH,
 
-        [Parameter(Mandatory=$true, ValueFromPipeline=$true, ValueFromPipelinebyPropertyName=$true)]
+        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ValueFromPipelinebyPropertyName = $true)]
         [System.String]
         $ALIAS
     )
@@ -147,12 +139,11 @@ function hhd-android-keytool-generate
 .SYNOPSIS
 .EXAMPLE
 #>
-function hhd-android-keytool-show-from-keystore-file
-{
+function hhd-android-keytool-show-from-keystore-file {
     [CmdletBinding()]
     param
     (
-        [Parameter(Mandatory=$true, ValueFromPipeline=$true, ValueFromPipelinebyPropertyName=$true)]
+        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ValueFromPipelinebyPropertyName = $true)]
         [System.String]
         $KEYSTORE_PATH
     )
@@ -169,12 +160,11 @@ function hhd-android-keytool-show-from-keystore-file
 	hhd-android-download-apk-from-device
 	adb shell pm list packages -f -3
 #>
-function hhd-android-download-apk-from-device
-{
+function hhd-android-download-apk-from-device {
     [CmdletBinding()]
     param
     (
-        [Parameter(Mandatory=$true, ValueFromPipeline=$true, ValueFromPipelinebyPropertyName=$true)]
+        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ValueFromPipelinebyPropertyName = $true)]
         [System.String]
         $PACKAGE_NAME
     )
@@ -191,12 +181,11 @@ function hhd-android-download-apk-from-device
 .EXAMPLE
     adb shell dumpsys package com.hhd2002.hhdtest
 #>
-function hhd-android-adb-shell-dumpsys
-{
+function hhd-android-adb-shell-dumpsys {
     [CmdletBinding()]
     param
     (
-        [Parameter(Mandatory=$true, ValueFromPipeline=$true, ValueFromPipelinebyPropertyName=$true)]
+        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ValueFromPipelinebyPropertyName = $true)]
         [System.String]
         $PACKAGE_NAME
     )
@@ -214,8 +203,7 @@ function hhd-android-adb-shell-dumpsys
     adb shell ls /storage/ -al
     adb shell ls /sdcard/Download/ -al
 #>
-function hhd-android-adb-shell-ls-important
-{
+function hhd-android-adb-shell-ls-important {
     [CmdletBinding()]
     param
     (
@@ -226,7 +214,7 @@ function hhd-android-adb-shell-ls-important
     $dirList = @("/sdcard/", "/storage/", "/sdcard/Download/", "/sdcard/Android/data/")
 
     $dirList | 
-    foreach {
+        foreach {
         write ""
         write ""
         write ""
@@ -242,16 +230,15 @@ function hhd-android-adb-shell-ls-important
 .SYNOPSIS
 .EXAMPLE
 #>
-function hhd-android-adb-file-copy-from-device
-{
+function hhd-android-adb-file-copy-from-device {
     [CmdletBinding()]
     param
     (
-        [Parameter(Mandatory=$true, ValueFromPipeline=$true, ValueFromPipelinebyPropertyName=$true)]
+        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ValueFromPipelinebyPropertyName = $true)]
         [System.String]
         $FILE_PATH_DEVICE,
 
-        [Parameter(Mandatory=$true, ValueFromPipeline=$true, ValueFromPipelinebyPropertyName=$true)]
+        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ValueFromPipelinebyPropertyName = $true)]
         [System.String]
         $FILE_PATH_PC
     )
@@ -266,16 +253,15 @@ function hhd-android-adb-file-copy-from-device
 .SYNOPSIS
 .EXAMPLE
 #>
-function hhd-android-adb-file-copy-to-device
-{
+function hhd-android-adb-file-copy-to-device {
     [CmdletBinding()]
     param
     (
-        [Parameter(Mandatory=$true, ValueFromPipeline=$true, ValueFromPipelinebyPropertyName=$true)]
+        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ValueFromPipelinebyPropertyName = $true)]
         [System.String]
         $FILE_PATH_PC,
 
-        [Parameter(Mandatory=$true, ValueFromPipeline=$true, ValueFromPipelinebyPropertyName=$true)]
+        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ValueFromPipelinebyPropertyName = $true)]
         [System.String]
         $FILE_PATH_DEVICE
     )
@@ -290,8 +276,7 @@ function hhd-android-adb-file-copy-to-device
 .SYNOPSIS
 .EXAMPLE
 #>
-function hhd-android-gradle-version
-{
+function hhd-android-gradle-version {
     [CmdletBinding()]
     param
     (
@@ -308,21 +293,20 @@ function hhd-android-gradle-version
 .SYNOPSIS
 .EXAMPLE
 #>
-function hhd-android-adb-logcat
-{
+function hhd-android-adb-logcat {
     [CmdletBinding()]
     param
     (
-        [Parameter(Mandatory=$true, ValueFromPipeline=$true, ValueFromPipelinebyPropertyName=$true)]
+        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ValueFromPipelinebyPropertyName = $true)]
         [System.String]
         $PACKAGE_NAME,
 
-        [parameter(Mandatory = $false, ValueFromPipeline=$true, ValueFromPipelinebyPropertyName=$true)]
+        [parameter(Mandatory = $false, ValueFromPipeline = $true, ValueFromPipelinebyPropertyName = $true)]
         [ValidateSet("E", "W", "I", "D", "V")]
         [string]
         $LOG_LEVEL = "V",
 
-        [parameter(Mandatory=$false, ValueFromPipeline=$true, ValueFromPipelinebyPropertyName=$true)]
+        [parameter(Mandatory = $false, ValueFromPipeline = $true, ValueFromPipelinebyPropertyName = $true)]
         [switch]$CLEAR_LOG = $false
     )
 
@@ -340,20 +324,26 @@ function hhd-android-adb-logcat
     write ""
 
     adb -d logcat *:$LOG_LEVEL | sls $pidStr | 
-    foreach {
+        foreach {
         if ($_ -match "$pidStr\s\d*\sF") {
             Write-Host $_ -ForegroundColor Red
-        } elseif ($_ -match "$pidStr\s\d*\sE") {
+        }
+        elseif ($_ -match "$pidStr\s\d*\sE") {
             Write-Host $_ -ForegroundColor Red
-        } elseif ($_ -match "$pidStr\s\d*\sW") {
+        }
+        elseif ($_ -match "$pidStr\s\d*\sW") {
             Write-Host $_ -ForegroundColor Yellow
-        } elseif ($_ -match "$pidStr\s\d*\sI") {
+        }
+        elseif ($_ -match "$pidStr\s\d*\sI") {
             Write-Host $_ -ForegroundColor Green
-        } elseif ($_ -match "$pidStr\s\d*\sD") {
+        }
+        elseif ($_ -match "$pidStr\s\d*\sD") {
             Write-Host $_ -ForegroundColor Gray
-        } elseif ($_ -match "$pidStr\s\d*\sV") {
+        }
+        elseif ($_ -match "$pidStr\s\d*\sV") {
             Write-Host $_ -ForegroundColor White
-        } else {
+        }
+        else {
             Write-Host $_ -ForegroundColor White
         }
     }
@@ -366,12 +356,11 @@ function hhd-android-adb-logcat
 .SYNOPSIS
 .EXAMPLE
 #>
-function hhd-android-adb-start-app
-{
+function hhd-android-adb-start-app {
     [CmdletBinding()]
     param
     (
-        [Parameter(Mandatory=$true, ValueFromPipeline=$true, ValueFromPipelinebyPropertyName=$true)]
+        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ValueFromPipelinebyPropertyName = $true)]
         [System.String]
         $PACKAGE_NAME
     )
@@ -387,8 +376,7 @@ function hhd-android-adb-start-app
 .SYNOPSIS
 .EXAMPLE
 #>
-function hhd-android-sdk-dir-ls
-{
+function hhd-android-sdk-dir-ls {
     [CmdletBinding()]
     param
     (
@@ -407,13 +395,63 @@ function hhd-android-sdk-dir-ls
 .SYNOPSIS
 .EXAMPLE
 #>
-function hhd-android-cleanup-build-process
-{
+function hhd-android-cleanup-build-process {
     [CmdletBinding()]
     param
     (
     )
 
-	ps ninja, adb, java, cmake, clang* | kill -Force
-	return $obj;
+    ps ninja, adb, java, cmake, clang* | kill -Force
+    return $obj;
+}
+
+
+
+<#
+.SYNOPSIS
+.EXAMPLE
+#>
+function hhd-android-pcap-ls {
+    [CmdletBinding()]
+    param
+    (
+    )
+
+    process {
+        $TCAP_DIR = "/sdcard/Android/data/jp.co.taosoftware.android.packetcapture/files";
+        
+        $result = (adb shell ls $TCAP_DIR) -split "\n" | 
+            foreach { 
+            return "$TCAP_DIR/$_"
+        }
+
+        return $result
+    }
+}
+
+
+<#
+.SYNOPSIS
+.EXAMPLE
+#>
+function hhd-android-pcap-download {
+    [CmdletBinding()]
+    param
+    (
+        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ValueFromPipelinebyPropertyName = $true)]
+        [System.String]
+        $DEVICE_FILE_PATH
+    )
+
+    process {
+        $fileName = [System.IO.Path]::GetFileName($DEVICE_FILE_PATH)
+
+        if (Test-Path $fileName) {
+            Write-Host "$fileName : already exist !!!"
+        }
+        else {
+            Write-Host "$fileName : copying ..."
+            hhd-android-adb-file-copy-from-device -FILE_PATH_DEVICE $DEVICE_FILE_PATH -FILE_PATH_PC .    
+        }
+    }
 }

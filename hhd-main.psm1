@@ -115,10 +115,13 @@ C:\hhdcommand\YouTubeToMP3;
 C:\hhdcommand\dbeaver;
 C:\hhdcommand\dbgview;
 C:\hhdcommand\depends;
+C:\Program Files\Microsoft Message Analyzer;
 
 $(hhd-resolve-path ~\AppData\Local\JetBrains\Installations\dotPeek11);
 $(hhd-resolve-path ~\AppData\Local\Programs\Python\Python36-32);
 $(hhd-resolve-path ~\AppData\Local\Android\Sdk\platform-tools);
+$(hhd-resolve-path ~\AppData\Local\Android\Sdk\cmake\3.6.4111459\bin);
+$(hhd-resolve-path ~\AppData\Local\Android\Sdk\ndk-bundle);
 "
 
 
