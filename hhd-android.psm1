@@ -420,8 +420,11 @@ function hhd-android-pcap-ls {
     process {
         $TCAP_DIR = "/sdcard/Android/data/jp.co.taosoftware.android.packetcapture/files";
         
-        $result = (adb shell ls $TCAP_DIR) -split "\n" | 
-            foreach { 
+        $result = 
+        adb shell ls $TCAP_DIR | 
+        where { $_ -ne "" } |
+        foreach 
+        { 
             return "$TCAP_DIR/$_"
         }
 
@@ -453,5 +456,23 @@ function hhd-android-pcap-download {
             Write-Host "$fileName : copying ..."
             hhd-android-adb-file-copy-from-device -FILE_PATH_DEVICE $DEVICE_FILE_PATH -FILE_PATH_PC .    
         }
+    }
+}
+
+
+
+<#
+.SYNOPSIS
+.EXAMPLE
+#>
+function hhd-android-pcap-rm {
+    [CmdletBinding()]
+    param
+    (
+    )
+
+    process {
+        $TCAP_DIR = "/sdcard/Android/data/jp.co.taosoftware.android.packetcapture/files";
+        adb shell rm -rf
     }
 }

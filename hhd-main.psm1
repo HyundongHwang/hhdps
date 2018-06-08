@@ -117,6 +117,22 @@ C:\hhdcommand\dbgview;
 C:\hhdcommand\depends;
 C:\Program Files\Microsoft Message Analyzer;
 
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin;
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\Common7\IDE\CommonExtensions\Microsoft\CMake\Ninja;
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\Common7\IDE\Remote Debugger\x64;
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\Common7\IDE\VC\vcpackages;
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\Common7\IDE\Xml;
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\Common7\IDE;
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\Common7\Tools;
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\JavaScript\Node.JS\v6.4.0_x86;
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\MSBuild\15.0\Bin\amd64;
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\MSBuild\15.0\Bin\Roslyn;
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\MSBuild\15.0\Bin;
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\VC\Redist\MSVC\14.14.26405;
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\VC\Tools\MSVC\14.14.26428\bin\Hostx64\x64;
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\Web\External\x86;
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\Web\External;
+
 $(hhd-resolve-path ~\AppData\Local\JetBrains\Installations\dotPeek11);
 $(hhd-resolve-path ~\AppData\Local\Programs\Python\Python36-32);
 $(hhd-resolve-path ~\AppData\Local\Android\Sdk\platform-tools);

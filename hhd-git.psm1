@@ -170,6 +170,7 @@ function hhd-git-diff
     )
 
     $res = git diff
+    $res += git diff --cached
     hhd-git-colored-output -INPUT_OBJECT $res
 }
 
@@ -381,5 +382,27 @@ function hhd-git-clone
         $obj | Add-Member -MemberType NoteProperty -Name "url" -Value $URL
         $obj | Add-Member -MemberType NoteProperty -Name "dir" -Value $newDirName
         return $obj;
+    }
+}
+
+
+
+<#
+.SYNOPSIS
+.EXAMPLE
+#>
+function hhd-git-refresh
+{
+    [CmdletBinding()]
+    param
+    (
+    )
+
+    process 
+    {
+        git fetch --all --prune --prune-tags;
+        git remote -v;
+        git branch -a;
+        git status;
     }
 }
