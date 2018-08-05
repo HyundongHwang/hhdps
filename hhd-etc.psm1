@@ -1288,3 +1288,23 @@ function hhd-com-show-registry
 	Out-Host
 
 }
+
+
+
+<#
+.SYNOPSIS
+.EXAMPLE
+#>
+function hhd-tee
+{
+   [CmdletBinding()]
+   param
+   (
+       [Parameter(Mandatory=$true, ValueFromPipeline=$true, ValueFromPipelinebyPropertyName=$true)]
+       [System.String]
+       $WORLD
+   )
+
+    $filePath = "$([datetime]::Now.ToString("yyMMdd-HHmmss")).log"
+    tee -FilePath $filePath
+}

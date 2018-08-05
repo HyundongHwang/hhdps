@@ -86,6 +86,7 @@ C:\Program Files\Microsoft Office\Office16;
 C:\Program Files\Microsoft VS Code;
 C:\Program Files\dotnet;
 C:\Program Files\nodejs;
+C:\Program Files\IIS Express;
 C:\ProgramData\chocolatey\bin;
 C:\Users\hhd20\AppData\Local\Android\Sdk\platform-tools;
 C:\Users\hhd20\AppData\Local\Programs\Python\Python36;
@@ -132,6 +133,7 @@ C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\VC\Redist\MSVC\
 C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\VC\Tools\MSVC\14.14.26428\bin\Hostx64\x64;
 C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\Web\External\x86;
 C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\Web\External;
+C:\Program Files (x86)\WinMerge;
 
 $(hhd-resolve-path ~\AppData\Local\JetBrains\Installations\dotPeek11);
 $(hhd-resolve-path ~\AppData\Local\Programs\Python\Python36-32);

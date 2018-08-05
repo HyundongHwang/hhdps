@@ -318,35 +318,15 @@ function hhd-android-adb-logcat {
     
     $pidStr = (adb shell ps | sls $PACKAGE_NAME).ToString().Split(" ", [System.StringSplitOptions]::RemoveEmptyEntries)[1]
 
-    write "PID : $pidStr start logcat ..."
-    write ""
-    write ""
-    write ""
+    Write-Host "PID : $pidStr start logcat ..."
+    Write-Host ""
+    Write-Host ""
+    Write-Host ""
 
-    adb -d logcat *:$LOG_LEVEL | sls $pidStr | 
-        foreach {
-        if ($_ -match "$pidStr\s\d*\sF") {
-            Write-Host $_ -ForegroundColor Red
-        }
-        elseif ($_ -match "$pidStr\s\d*\sE") {
-            Write-Host $_ -ForegroundColor Red
-        }
-        elseif ($_ -match "$pidStr\s\d*\sW") {
-            Write-Host $_ -ForegroundColor Yellow
-        }
-        elseif ($_ -match "$pidStr\s\d*\sI") {
-            Write-Host $_ -ForegroundColor Green
-        }
-        elseif ($_ -match "$pidStr\s\d*\sD") {
-            Write-Host $_ -ForegroundColor Gray
-        }
-        elseif ($_ -match "$pidStr\s\d*\sV") {
-            Write-Host $_ -ForegroundColor White
-        }
-        else {
-            Write-Host $_ -ForegroundColor White
-        }
-    }
+    $filePath = "PKG-$PACKAGE_NAME-TIME-$([datetime]::Now.ToString("yyMMdd-HHmmss")).log"
+
+    adb -d logcat *:$LOG_LEVEL | 
+    sls $pidStr
 }
 
 
@@ -422,8 +402,8 @@ function hhd-android-pcap-ls {
         
         $result = 
         adb shell ls $TCAP_DIR | 
-        where { $_ -ne "" } |
-        foreach 
+            where { $_ -ne "" } |
+            foreach 
         { 
             return "$TCAP_DIR/$_"
         }
