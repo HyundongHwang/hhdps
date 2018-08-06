@@ -323,30 +323,7 @@ function hhd-android-adb-logcat {
     write ""
     write ""
 
-    adb -d logcat *:$LOG_LEVEL | sls $pidStr | 
-        foreach {
-        if ($_ -match "$pidStr\s\d*\sF") {
-            Write-Host $_ -ForegroundColor Red
-        }
-        elseif ($_ -match "$pidStr\s\d*\sE") {
-            Write-Host $_ -ForegroundColor Red
-        }
-        elseif ($_ -match "$pidStr\s\d*\sW") {
-            Write-Host $_ -ForegroundColor Yellow
-        }
-        elseif ($_ -match "$pidStr\s\d*\sI") {
-            Write-Host $_ -ForegroundColor Green
-        }
-        elseif ($_ -match "$pidStr\s\d*\sD") {
-            Write-Host $_ -ForegroundColor Gray
-        }
-        elseif ($_ -match "$pidStr\s\d*\sV") {
-            Write-Host $_ -ForegroundColor White
-        }
-        else {
-            Write-Host $_ -ForegroundColor White
-        }
-    }
+    adb -d logcat *:$LOG_LEVEL | sls $pidStr
 }
 
 

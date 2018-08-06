@@ -3,7 +3,7 @@ $PSSCRIPTROOT_RESOLVED = Resolve-Path $PSScriptRoot
 
 $HHDPS_PROFILE_ADDON_STR = 
 @"
-ls "$PSSCRIPTROOT_RESOLVED\*.psm1" |
+Get-ChildItem "$PSSCRIPTROOT_RESOLVED\*.psm1" |
 % { 
     write "`$(`$_.Name) load ..."
     Import-Module `$_.FullName -Force -WarningAction Ignore
