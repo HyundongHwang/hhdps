@@ -318,10 +318,10 @@ function hhd-android-adb-logcat {
     
     $pidStr = (adb shell ps | sls $PACKAGE_NAME).ToString().Split(" ", [System.StringSplitOptions]::RemoveEmptyEntries)[1]
 
-    write "PID : $pidStr start logcat ..."
-    write ""
-    write ""
-    write ""
+    Write-Host "PID : $pidStr start logcat ..."
+    Write-Host ""
+    Write-Host ""
+    Write-Host ""
 
     adb -d logcat *:$LOG_LEVEL | sls $pidStr
 }
@@ -399,8 +399,8 @@ function hhd-android-pcap-ls {
         
         $result = 
         adb shell ls $TCAP_DIR | 
-        where { $_ -ne "" } |
-        foreach 
+            where { $_ -ne "" } |
+            foreach 
         { 
             return "$TCAP_DIR/$_"
         }
