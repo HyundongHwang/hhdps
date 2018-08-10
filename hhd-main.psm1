@@ -41,6 +41,17 @@ if ($PSVersionTable.Platform -eq "Unix")
     $env:Path = "
     $env:Path;
 
+    /snap/bin
+    /usr/local/sbin
+    /usr/local/bin
+    /usr/sbin
+    /usr/bin
+    /sbin
+    /bin
+    /usr/games
+    /usr/local/games
+
+    $(hhd-resolve-path ~/imgur-screenshot);
     $(hhd-resolve-path ~/Android/Sdk/platform-tools);
     "    
 }
