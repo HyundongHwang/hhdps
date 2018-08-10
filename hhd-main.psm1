@@ -1,17 +1,3 @@
-write "main start ..."
-write "OutputEncoding = [System.Text.Encoding]::UTF8 ..."
-$OutputEncoding = [System.Text.Encoding]::UTF8
-
-# powershell_ise
-# write "[System.Console]::OutputEncoding = [Text.UTF8Encoding]::UTF8 ..."
-# git status
-# [System.Console]::OutputEncoding = [Text.UTF8Encoding]::UTF8
-
-write "env:LC_ALL=C.UTF-8 ..."
-$env:LC_ALL="C.UTF-8"
-
-
-
 <#
 .SYNOPSIS
 .EXAMPLE
@@ -58,6 +44,18 @@ if ($PSVersionTable.Platform -eq "Unix")
 }
 else 
 {
+    Write-Host "main start ..."
+    Write-Host "OutputEncoding = [System.Text.Encoding]::UTF8 ..."
+    $OutputEncoding = [System.Text.Encoding]::UTF8
+
+    # powershell_ise
+    # write "[System.Console]::OutputEncoding = [Text.UTF8Encoding]::UTF8 ..."
+    # git status
+    # [System.Console]::OutputEncoding = [Text.UTF8Encoding]::UTF8
+
+    Write-Host "env:LC_ALL=C.UTF-8 ..."
+    $env:LC_ALL="C.UTF-8"
+
     $env:Path = "
     $env:Path;
     

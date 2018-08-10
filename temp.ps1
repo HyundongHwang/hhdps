@@ -18,11 +18,11 @@
 
 #    process 
 #    {
-#        Write-Host "½ÃÀÛ"
+#        Write-Host "ï¿½ï¿½ï¿½ï¿½"
 #        $obj = New-Object -typename PSObject
-#        $obj | Add-Member -MemberType NoteProperty -Name "hello" -Value "Çï·Î¿ì"
+#        $obj | Add-Member -MemberType NoteProperty -Name "hello" -Value "ï¿½ï¿½Î¿ï¿½"
 #        $obj | Add-Member -MemberType NoteProperty -Name "world" -Value $WORLD
-#        Write-Host "Á¾·á"
+#        Write-Host "ï¿½ï¿½ï¿½ï¿½"
 #        return $obj;
 #    }
 #}
@@ -30,7 +30,7 @@
 
 
 #hhd-hello -WORLD world
-#@("ÀÏ", "ÀÌ", "»ï") | hhd-hello
+#@("ï¿½ï¿½", "ï¿½ï¿½", "ï¿½ï¿½") | hhd-hello
 
 
 

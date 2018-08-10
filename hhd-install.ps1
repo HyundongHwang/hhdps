@@ -1,14 +1,31 @@
 $PROFILE_PATH = "$PSHOME\profile.ps1"
 $PSSCRIPTROOT_RESOLVED = Resolve-Path $PSScriptRoot
 
+
+if ($PSVersionTable.Platform -eq "Unix") 
+{
+
+$HHDPS_PROFILE_ADDON_STR = 
+@"
+    Import-Module ~/hhdps/hhd-linux.psm1 -Force -WarningAction Ignore
+    Import-Module ~/hhdps/hhd-git.psm1 -Force -WarningAction Ignore
+    Import-Module ~/hhdps/hhd-android.psm1 -Force -WarningAction Ignore
+"@
+
+}
+else
+{
+
 $HHDPS_PROFILE_ADDON_STR = 
 @"
 Get-ChildItem "$PSSCRIPTROOT_RESOLVED\*.psm1" |
 % { 
-    write "`$(`$_.Name) load ..."
+    Write-Host "`$(`$_.Name) load ..."
     Import-Module `$_.FullName -Force -WarningAction Ignore
 }
 "@
+
+}
 
 if(!(Test-Path $PROFILE_PATH))
 {
