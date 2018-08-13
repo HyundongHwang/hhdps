@@ -24,23 +24,8 @@ function hhd-resolve-path {
 
 if ($PSVersionTable.Platform -eq "Unix") 
 {
-    $env:PATH = "
-    
-    $env:PATH:
-
-    /snap/bin:
-    /usr/local/sbin:
-    /usr/local/bin:
-    /usr/sbin:
-    /usr/bin:
-    /sbin:
-    /bin:
-    /usr/games:
-    /usr/local/games:
-
-    $(hhd-resolve-path ~/Android/Sdk/platform-tools):
-    $(hhd-resolve-path ~/imgur-screenshot):
-    "
+    $env:PATH += "$(hhd-resolve-path ~/Android/Sdk/platform-tools):"
+    $env:PATH += "$(hhd-resolve-path ~/imgur-screenshot):"
 }
 else 
 {

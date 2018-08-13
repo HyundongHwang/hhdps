@@ -7,3 +7,15 @@ function lh
 {
     ls --color=auto -alFh $PATH
 }
+
+
+
+function code
+(
+    [Parameter(Mandatory=$false, ValueFromPipeline=$true, ValueFromPipelinebyPropertyName=$true)]
+    [System.String]
+    $PATH
+)
+{
+    /usr/share/code/code $PATH
+}
