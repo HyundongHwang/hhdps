@@ -11,6 +11,7 @@ $HHDPS_PROFILE_ADDON_STR =
     Import-Module ~/hhdps/hhd-linux.psm1 -Force -WarningAction Ignore
     Import-Module ~/hhdps/hhd-git.psm1 -Force -WarningAction Ignore
     Import-Module ~/hhdps/hhd-android.psm1 -Force -WarningAction Ignore
+    Import-Module ~/hhdps/hhd-ull.psm1 -Force -WarningAction Ignore
 "@
 
 }

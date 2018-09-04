@@ -1,13 +1,9 @@
-##
-## temp.ps1
-##
-
-#<#
-#.SYNOPSIS
-#.EXAMPLE
-##>
-#function hhd-hello
-#{
+# <#
+# .SYNOPSIS
+# .EXAMPLE
+# #>
+# function hhd-hello
+# {
 #    [CmdletBinding()]
 #    param
 #    (
@@ -18,19 +14,19 @@
 
 #    process 
 #    {
-#        Write-Host "����"
+#        Write-Host "start"
 #        $obj = New-Object -typename PSObject
-#        $obj | Add-Member -MemberType NoteProperty -Name "hello" -Value "��ο�"
+#        $obj | Add-Member -MemberType NoteProperty -Name "hello" -Value "안녕하세요"
 #        $obj | Add-Member -MemberType NoteProperty -Name "world" -Value $WORLD
-#        Write-Host "����"
+#        Write-Host ""
 #        return $obj;
 #    }
-#}
+# }
 
 
 
-#hhd-hello -WORLD world
-#@("��", "��", "��") | hhd-hello
+# hhd-hello -WORLD world
+# @("a", "b", "c") | hhd-hello
 
 
 
