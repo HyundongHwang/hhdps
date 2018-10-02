@@ -400,9 +400,9 @@ function hhd-git-refresh
 
     process 
     {
-        git fetch --all --prune --prune-tags;
-        git remote -v;
-        git branch -a;
-        git status;
+        git fetch --all --prune
+        git remote -v
+        git branch -a
+        git status
     }
 }

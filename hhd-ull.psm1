@@ -22,8 +22,7 @@ function hhd-ull-logcat
 
     adb -d logcat | 
     Select-String $pidStr |
-    Tee-Object -FilePath $filePath |
-    logsloth
+    Tee-Object -FilePath $filePath
 }
 
 

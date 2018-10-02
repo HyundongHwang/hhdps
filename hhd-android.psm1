@@ -75,7 +75,7 @@ function hhd-android-gradle-clean {
     )
 
     ./gradlew clean --daemon --stacktrace
-    ls *.apk, *.aar, *.jar -Recurse  | where { $_.FullName -like "*build\outputs*" } | select FullName
+    Get-ChildItem *.apk, *.aar, *.jar -Recurse  | where { $_.FullName -like "*build\outputs*" } | select FullName
 }
 
 
@@ -91,7 +91,7 @@ function hhd-android-gradle-assemble-debug {
     )
 
     ./gradlew assembleDebug --daemon --stacktrace
-    ls *.apk, *.aar, *.jar -Recurse  | where { $_.FullName -like "*build\outputs*" } | select FullName
+    Get-ChildItem *.apk, *.aar -Recurse | Select-Object FullName 
 }
 
 
@@ -107,7 +107,7 @@ function hhd-android-gradle-assemble-release {
     )
 
     ./gradlew assembleRelease --daemon --stacktrace
-    ls *.apk, *.aar, *.jar -Recurse  | where { $_.FullName -like "*build\outputs*" } | select FullName
+    Get-ChildItem *.apk, *.aar -Recurse | Select-Object FullName 
 }
 
 
@@ -130,7 +130,7 @@ function hhd-android-keytool-generate {
     )
 
     keytool -genkey -v -keystore $KEYSTORE_PATH -alias $ALIAS -keyalg RSA -keysize 2048 -validity 10000
-    ls *.keystore -Recurse | select FullName
+    Get-ChildItem *.keystore -Recurse | select FullName
 }
 
 
@@ -149,7 +149,7 @@ function hhd-android-keytool-show-from-keystore-file {
     )
 
     keytool -list -v -keystore $KEYSTORE_PATH
-    ls *.keystore -Recurse | select FullName
+    Get-ChildItem *.keystore -Recurse | select FullName
 }
 
 

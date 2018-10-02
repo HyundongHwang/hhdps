@@ -19,3 +19,15 @@ function code
 {
     /snap/bin/code $PATH
 }
+
+
+
+function ff
+(
+    [Parameter(Mandatory=$false, ValueFromPipeline=$true, ValueFromPipelinebyPropertyName=$true)]
+    [System.String]
+    $PATH
+)
+{
+    Get-ChildItem $PATH -Recurse | select FullName
+}
