@@ -27,12 +27,3 @@
 
 # hhd-hello -WORLD world
 # @("a", "b", "c") | hhd-hello
-
-
-
-
-
-
-
-
-

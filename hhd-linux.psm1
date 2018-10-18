@@ -31,3 +31,27 @@ function ff
 {
     Get-ChildItem $PATH -Recurse | select FullName
 }
+
+
+
+function open
+(
+    [Parameter(Mandatory=$false, ValueFromPipeline=$true, ValueFromPipelinebyPropertyName=$true)]
+    [System.String]
+    $PATH
+)
+{
+    nautilus --browser $PATH
+}
+
+
+
+function www
+(
+    [Parameter(Mandatory=$false, ValueFromPipeline=$true, ValueFromPipelinebyPropertyName=$true)]
+    [System.String]
+    $PATH
+)
+{
+    gnome-www-browser $PATH
+}

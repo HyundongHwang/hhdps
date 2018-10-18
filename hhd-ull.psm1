@@ -3,26 +3,45 @@
 .SYNOPSIS
 .EXAMPLE
 #>
-function hhd-ull-logcat
-{
+function hhd-ull-logcat {
     [CmdletBinding()]
     param
     (
     )
 
-    $PACKAGE_NAME = "com.navercorp.simpleullplayer"
+    $PACKAGE_NAME_LIST = @(
+        "com.navercorp.ullplayerdev", 
+        "com.navercorp.ullplayersimple", 
+        "com.naver.vapp"
+    )
 
-    adb -d logcat -c
-    $pidStr = (adb shell ps | Select-String $PACKAGE_NAME).ToString().Split(" ", [System.StringSplitOptions]::RemoveEmptyEntries)[1]
-    Write-Host "PID : $pidStr start logcat ..."
+    $pid = $null
+
+    foreach ($packageName in $PACKAGE_NAME_LIST) {
+        Write-Host "$packageName process searching ..."
+        adb -d logcat -c
+        $pid = (adb shell ps | Select-String $packageName).ToString().Split(" ", [System.StringSplitOptions]::RemoveEmptyEntries)[1]
+
+        if (![string]::IsNullOrEmpty($pid)) {
+            Write-Host "$packageName[$pid] process found !!!"
+            break
+        }
+    }
+
+    if ([string]::IsNullOrEmpty($pid)) {
+        Write-Host "process not found !!!"
+        return
+    }
+
+    Write-Host "$PACKAGE_NAME[$pid] start logcat ..."
     Write-Host ""
     Write-Host ""
     Write-Host ""
     $filePath = "hhd-ull-logcat-$([datetime]::Now.ToString("yyMMdd-HHmm")).log"
 
     adb -d logcat | 
-    Select-String $pidStr |
-    Tee-Object -FilePath $filePath
+        Select-String $pid |
+        Tee-Object -FilePath $filePath
 }
 
 
@@ -32,16 +51,15 @@ function hhd-ull-logcat
 .SYNOPSIS
 .EXAMPLE
 #>
-function hhd-ull-logcat-analysis
-{
+function hhd-ull-logcat-analysis {
     [CmdletBinding()]
     param
     (
-        [Parameter(Mandatory=$true, ValueFromPipeline=$true, ValueFromPipelinebyPropertyName=$true)]
+        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ValueFromPipelinebyPropertyName = $true)]
         [System.String]
         $LOG_FILE_PATH,
 
-        [Parameter(Mandatory=$false, ValueFromPipeline=$true, ValueFromPipelinebyPropertyName=$true)]
+        [Parameter(Mandatory = $false, ValueFromPipeline = $true, ValueFromPipelinebyPropertyName = $true)]
         [System.String[]]
         $PATTERN_LIST
     )
@@ -52,11 +70,11 @@ function hhd-ull-logcat-analysis
 
     $logFileText = Get-Content $LOG_FILE_PATH -Head 100
     $logFileText | 
-    foreach {
+        foreach {
         $line = $_
         $res = $line -match "https?://.*[.mpd|.m4s|.m4v|.m4a|.mp4|.ts]"
 
-        if(!$res) {
+        if (!$res) {
             return
         }
 
@@ -64,7 +82,7 @@ function hhd-ull-logcat-analysis
 
         $url = $Matches[0]
     
-        if($urlMap.ContainsKey($url)) {
+        if ($urlMap.ContainsKey($url)) {
             return
         }
 
@@ -74,35 +92,35 @@ function hhd-ull-logcat-analysis
     }
 
     $PATTERN_LIST | 
-    foreach {
+        foreach {
         $pattern = $_
         $statDic[$pattern] = New-Object System.Collections.Generic.List[psobject]
     }
 
 
     $urlList | 
-    foreach {
+        foreach {
         $url = $_
         Write-Host ("=" * 80)
         Write-Host $url -ForegroundColor Red
         Write-Host ("-" * 80)
 
         $logFileText | 
-        Select-String $url | 
-        logsloth -SHOW_FUNC_COUNT -RETURN_LOG_AS_TABLE |
-        foreach {
+            Select-String $url | 
+            logsloth -SHOW_FUNC_COUNT -RETURN_LOG_AS_TABLE |
+            foreach {
             $row = $_
 
             $PATTERN_LIST | 
-            foreach {
+                foreach {
                 
                 $pattern = $_
 
-                if($pattern -eq $null) {
+                if ($pattern -eq $null) {
                     return
                 }
 
-                if($row.Log -like "*$pattern*") {
+                if ($row.Log -like "*$pattern*") {
                     $statList = $statDic[$pattern]
                     $statList.Add($row)
                 }
@@ -117,7 +135,7 @@ function hhd-ull-logcat-analysis
 
 
     $statDic.Keys | 
-    foreach {
+        foreach {
         $key = $_
         $statList = $statDic[$key]
         Write-Host ("=" * 80)
@@ -134,6 +152,27 @@ function hhd-ull-logcat-analysis
     }
 }
 
+
+
+<#
+.SYNOPSIS
+.EXAMPLE
+#>
+function hhd-ull-stellite-linux-unit-test-build-run {
+    [CmdletBinding()]
+    param
+    (
+    )
+
+    ~/project/stellite/tools/build.py --target-platform=linux --target stellite_http_client build --target-type shared_library --debug
+    sudo rsync ~/project/stellite/build_linux/src/out_linux/debug/libstellite_http_client.so ~/project/stellite/example/linux-client/stellite/bin/libstellite_http_client.so
+    sudo rm -rf ~/project/stellite/example/linux-client/CMakeCache.txt
+    sudo rm -rf ~/project/stellite/example/linux-client/CMakeFiles
+    cd ~/project/stellite/example/linux-client
+    sudo cmake .
+    sudo make
+    ./MyStelliteLinuxTest | logsloth -OUT_AS_HTML
+}
 
 
 
