@@ -20,11 +20,16 @@ function hhd-ull-logcat {
     foreach ($packageName in $PACKAGE_NAME_LIST) {
         Write-Host "$packageName process searching ..."
         adb -d logcat -c
-        $pid = (adb shell ps | Select-String $packageName).ToString().Split(" ", [System.StringSplitOptions]::RemoveEmptyEntries)[1]
 
-        if (![string]::IsNullOrEmpty($pid)) {
-            Write-Host "$packageName[$pid] process found !!!"
-            break
+        try {
+            $pid = (adb shell ps | Select-String $packageName)[0].ToString().Split(" ", [System.StringSplitOptions]::RemoveEmptyEntries)[1]
+
+            if (![string]::IsNullOrEmpty($pid)) {
+                Write-Host "$packageName[$pid] process found !!!"
+                break
+            }
+        }
+        catch {
         }
     }
 
@@ -172,6 +177,8 @@ function hhd-ull-stellite-linux-unit-test-build-run {
     sudo cmake .
     sudo make
     ./MyStelliteLinuxTest | logsloth -OUT_AS_HTML
+    $lastHtmlFile = Get-ChildItem *.html | Sort-Object Name | Select-Object -Last 1
+    www $lastHtmlFile
 }
 
 

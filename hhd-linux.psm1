@@ -17,7 +17,7 @@ function code
     $PATH
 )
 {
-    /snap/bin/code $PATH
+    /usr/bin/code $PATH
 }
 
 
