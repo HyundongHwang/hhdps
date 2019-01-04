@@ -55,3 +55,27 @@ function www
 {
     gnome-www-browser $PATH
 }
+
+
+
+function pkillef
+(
+    [Parameter(Mandatory=$false, ValueFromPipeline=$true, ValueFromPipelinebyPropertyName=$true)]
+    [System.String]
+    $KEYWORD
+)
+{
+    pkill -9 -ef $KEYWORD
+}
+
+
+
+function psgrep
+(
+    [Parameter(Mandatory=$false, ValueFromPipeline=$true, ValueFromPipelinebyPropertyName=$true)]
+    [System.String]
+    $KEYWORD
+)
+{
+    ps -ef | grep $KEYWORD
+}
