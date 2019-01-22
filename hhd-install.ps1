@@ -20,11 +20,16 @@ else
 
 $HHDPS_PROFILE_ADDON_STR = 
 @"
-Get-ChildItem "$PSSCRIPTROOT_RESOLVED\*.psm1" |
-% { 
-    Write-Host "`$(`$_.Name) load ..."
-    Import-Module `$_.FullName -Force -WarningAction Ignore
-}
+    Import-Module /hhdps/hhd-main.psm1 -Force -WarningAction Ignore
+    Import-Module /hhdps/hhd-git.psm1 -Force -WarningAction Ignore
+    Import-Module /hhdps/hhd-android.psm1 -Force -WarningAction Ignore
+    Import-Module /hhdps/hhd-azure.psm1 -Force -WarningAction Ignore
+    Import-Module /hhdps/hhd-cd.psm1 -Force -WarningAction Ignore
+    Import-Module /hhdps/hhd-etc.psm1 -Force -WarningAction Ignore
+    Import-Module /hhdps/hhd-module.psm1 -Force -WarningAction Ignore
+    Import-Module /hhdps/hhd-process.psm1 -Force -WarningAction Ignore
+    Import-Module /hhdps/hhd-sal.psm1 -Force -WarningAction Ignore
+    Import-Module /hhdps/hhd-visual-studio.psm1 -Force -WarningAction Ignore
 "@
 
 }
