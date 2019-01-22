@@ -297,7 +297,7 @@ function hhd-android-adb-logcat {
     [CmdletBinding()]
     param
     (
-        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ValueFromPipelinebyPropertyName = $true)]
+        [Parameter(Mandatory = $false, ValueFromPipeline = $true, ValueFromPipelinebyPropertyName = $true)]
         [System.String]
         $PACKAGE_NAME,
 
@@ -316,14 +316,18 @@ function hhd-android-adb-logcat {
         adb -d logcat -c
     }
     
-    $pidStr = (adb shell ps | sls $PACKAGE_NAME).ToString().Split(" ", [System.StringSplitOptions]::RemoveEmptyEntries)[1]
+    if ($PACKAGE_NAME -eq "") {
+        adb -d logcat *:$LOG_LEVEL
+    } else {
+        $pidStr = (adb shell ps | sls $PACKAGE_NAME).ToString().Split(" ", [System.StringSplitOptions]::RemoveEmptyEntries)[1]
 
-    Write-Host "PID : $pidStr start logcat ..."
-    Write-Host ""
-    Write-Host ""
-    Write-Host ""
-
-    adb -d logcat *:$LOG_LEVEL | sls $pidStr
+        Write-Host "PID : $pidStr start logcat ..."
+        Write-Host ""
+        Write-Host ""
+        Write-Host ""
+    
+        adb -d logcat *:$LOG_LEVEL | sls $pidStr
+    }
 }
 
 
