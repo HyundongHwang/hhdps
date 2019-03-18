@@ -406,3 +406,59 @@ function hhd-git-refresh
         git status
     }
 }
+
+
+
+<#
+.SYNOPSIS
+.EXAMPLE
+#>
+function hhd-git-tag-list
+{
+    [CmdletBinding()]
+    param
+    (
+    )
+
+    process 
+    {
+        git fetch --all --prune
+        git tag -l -n
+    }
+}
+
+
+
+<#
+.SYNOPSIS
+.EXAMPLE
+#>
+function hhd-git-tag-add-push
+{
+    [CmdletBinding()]
+    param
+    (
+        [Parameter(Mandatory=$true, ValueFromPipeline=$true, ValueFromPipelinebyPropertyName=$true)]
+        [System.String]
+        $VER,
+
+        [Parameter(Mandatory=$true, ValueFromPipeline=$true, ValueFromPipelinebyPropertyName=$true)]
+        [System.String]
+        $MSG
+    )
+
+    process 
+    {
+        git fetch --all --prune
+        $tagName = "v$VER"
+        git tag -a $tagName -m $MSG
+
+        git remote | 
+        foreach {
+            $remoteName = $_
+            git push $remoteName $tagName
+        }
+
+        git tag -l -n
+    }
+}
