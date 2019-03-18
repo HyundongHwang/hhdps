@@ -121,6 +121,8 @@ else
     C:\hhdcommand\dbgview;
     C:\hhdcommand\depends;
     C:\Program Files\Microsoft Message Analyzer;
+    C:\Python27;
+    C:\Python27\Scripts;
     
     C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin;
     C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\Common7\IDE\CommonExtensions\Microsoft\CMake\Ninja;
@@ -143,6 +145,7 @@ else
     $(hhd-resolve-path ~\AppData\Local\Android\Sdk\platform-tools);
     $(hhd-resolve-path ~\AppData\Local\Android\Sdk\cmake\3.6.4111459\bin);
     $(hhd-resolve-path ~\AppData\Local\Android\Sdk\ndk-bundle);
+    $(hhd-resolve-path "~\AppData\Local\Programs\Microsoft VS Code");
     
     "    
 }
