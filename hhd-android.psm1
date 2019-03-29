@@ -457,3 +457,22 @@ function hhd-android-pcap-rm {
         adb shell rm -rf
     }
 }
+
+
+
+<#
+.SYNOPSIS
+.EXAMPLE
+#>
+function hhd-android-rm-build-dir {
+    [CmdletBinding()]
+    param
+    (
+    )
+
+    process {
+        Get-ChildItem -Recurse | 
+        where { $_.Name -eq "build" } | 
+        Remove-Item -Force -Recurse
+    }
+}
