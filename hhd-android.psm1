@@ -2,7 +2,7 @@
 .SYNOPSIS
 .EXAMPLE
 #>
-function hhd-android-install-apk {
+function hhd-android-install {
     [CmdletBinding()]
     param
     (
@@ -26,10 +26,10 @@ function hhd-android-uninstall {
     (
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ValueFromPipelinebyPropertyName = $true)]
         [System.String]
-        $PACKAGE_NAME
+        $PKG_NAME
     )
 
-    adb uninstall $PACKAGE_NAME
+    adb uninstall $PKG_NAME
 }
 
 
@@ -38,7 +38,7 @@ function hhd-android-uninstall {
 .SYNOPSIS
 .EXAMPLE
 #>
-function hhd-android-packages-show-in-device {
+function hhd-android-pkg-show-all {
     [CmdletBinding()]
     param
     (
@@ -53,7 +53,7 @@ function hhd-android-packages-show-in-device {
 .SYNOPSIS
 .EXAMPLE
 #>
-function hhd-android-gradle-signing-report {
+function hhd-android-signing-report {
     [CmdletBinding()]
     param
     (
@@ -75,7 +75,7 @@ function hhd-android-gradle-clean {
     )
 
     ./gradlew clean --daemon --stacktrace
-    Get-ChildItem *.apk, *.aar, *.jar -Recurse  | where { $_.FullName -like "*build\outputs*" } | select FullName
+    Get-ChildItem *.apk, *.aar, *.jar -Recurse | Where-Object { $_.FullName -like "*build\outputs*" } | Select-Object FullName
 }
 
 
@@ -130,7 +130,7 @@ function hhd-android-keytool-generate {
     )
 
     keytool -genkey -v -keystore $KEYSTORE_PATH -alias $ALIAS -keyalg RSA -keysize 2048 -validity 10000
-    Get-ChildItem *.keystore -Recurse | select FullName
+    Get-ChildItem *.keystore -Recurse | Select-Object FullName
 }
 
 
@@ -149,7 +149,7 @@ function hhd-android-keytool-show-from-keystore-file {
     )
 
     keytool -list -v -keystore $KEYSTORE_PATH
-    Get-ChildItem *.keystore -Recurse | select FullName
+    Get-ChildItem *.keystore -Recurse | Select-Object FullName
 }
 
 
@@ -166,12 +166,12 @@ function hhd-android-download-apk-from-device {
     (
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ValueFromPipelinebyPropertyName = $true)]
         [System.String]
-        $PACKAGE_NAME
+        $PKG_NAME
     )
 
-    $apkPathAtDevice = (adb shell pm path $PACKAGE_NAME) -replace "package:", ""
-    write "apkPathAtDevice : $apkPathAtDevice ..."
-    adb pull $apkPathAtDevice "$PACKAGE_NAME.apk"
+    $apkPathAtDevice = (adb shell pm path $PKG_NAME) -replace "package:", ""
+    Write-Host "apkPathAtDevice : $apkPathAtDevice ..."
+    adb pull $apkPathAtDevice "$PKG_NAME.apk"
 }
 
 
@@ -181,17 +181,17 @@ function hhd-android-download-apk-from-device {
 .EXAMPLE
     adb shell dumpsys package com.hhd2002.hhdtest
 #>
-function hhd-android-adb-shell-dumpsys {
+function hhd-android-dumpsys {
     [CmdletBinding()]
     param
     (
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ValueFromPipelinebyPropertyName = $true)]
         [System.String]
-        $PACKAGE_NAME
+        $PKG_NAME
     )
 
 
-    adb shell dumpsys package $PACKAGE_NAME
+    adb shell dumpsys package $PKG_NAME
 }
 
 
@@ -203,7 +203,7 @@ function hhd-android-adb-shell-dumpsys {
     adb shell ls /storage/ -al
     adb shell ls /sdcard/Download/ -al
 #>
-function hhd-android-adb-shell-ls-important {
+function hhd-android-ls-important {
     [CmdletBinding()]
     param
     (
@@ -214,7 +214,7 @@ function hhd-android-adb-shell-ls-important {
     $dirList = @("/sdcard/", "/storage/", "/sdcard/Download/", "/sdcard/Android/data/")
 
     $dirList | 
-        foreach {
+    ForEach-Object {
         write ""
         write ""
         write ""
@@ -230,7 +230,7 @@ function hhd-android-adb-shell-ls-important {
 .SYNOPSIS
 .EXAMPLE
 #>
-function hhd-android-adb-file-copy-from-device {
+function hhd-android-file-copy-from-device {
     [CmdletBinding()]
     param
     (
@@ -253,7 +253,7 @@ function hhd-android-adb-file-copy-from-device {
 .SYNOPSIS
 .EXAMPLE
 #>
-function hhd-android-adb-file-copy-to-device {
+function hhd-android-file-copy-to-device {
     [CmdletBinding()]
     param
     (
@@ -288,46 +288,61 @@ function hhd-android-gradle-version {
 
 
 
+function hhd-android-pkg-show-current {
+    [CmdletBinding()]
+    param
+    (
+    )
+
+    adb shell dumpsys activity activities | 
+    Select-String mLastPausedActivity, mLastPausedActivity |
+    ForEach-Object { 
+        $tokenArray = $_.ToString().Split( [char]' ', [char]'/') | Where-Object { $_ -ne "" }
+        $obj = New-Object -typename PSObject
+        $obj | Add-Member PkgName $tokenArray[3]
+        return $obj
+    }
+}
+
+
 
 <#
 .SYNOPSIS
 .EXAMPLE
 #>
-function hhd-android-adb-logcat {
+function hhd-android-logcat {
     [CmdletBinding()]
     param
     (
-        [Parameter(Mandatory = $false, ValueFromPipeline = $true, ValueFromPipelinebyPropertyName = $true)]
+        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ValueFromPipelinebyPropertyName = $true)]
         [System.String]
-        $PACKAGE_NAME,
+        $PKG_NAME,
 
         [parameter(Mandatory = $false, ValueFromPipeline = $true, ValueFromPipelinebyPropertyName = $true)]
         [ValidateSet("E", "W", "I", "D", "V")]
         [string]
-        $LOG_LEVEL = "V",
-
-        [parameter(Mandatory = $false, ValueFromPipeline = $true, ValueFromPipelinebyPropertyName = $true)]
-        [switch]$CLEAR_LOG = $false
+        $LOG_LEVEL = "V"
     )
 
+    adb -d logcat -c
+    $searchRes = adb shell ps | Select-String $PKG_NAME
 
-
-    if ($CLEAR_LOG) {
-        adb -d logcat -c
+    if ($searchRes -eq 0) {
+        Write-Host "$PKG_NAME not found !!!"
+        return
     }
-    
-    if ($PACKAGE_NAME -eq "") {
-        adb -d logcat *:$LOG_LEVEL
-    } else {
-        $pidStr = (adb shell ps | sls $PACKAGE_NAME).ToString().Split(" ", [System.StringSplitOptions]::RemoveEmptyEntries)[1]
 
-        Write-Host "PID : $pidStr start logcat ..."
-        Write-Host ""
-        Write-Host ""
-        Write-Host ""
-    
-        adb -d logcat *:$LOG_LEVEL | sls $pidStr
-    }
+    $tokenArray = $searchRes[0].ToString().Split(" ") | Where-Object { $_ -ne "" }
+    $pid = $tokenArray[1]
+
+    Write-Host "--------------------------------------------------------------------------------"
+    Write-Host "PKG_NAME[$PKG_NAME] pid[$pid] start logcat ..."
+    Write-Host "--------------------------------------------------------------------------------"
+    Write-Host "--------------------------------------------------------------------------------"
+    Write-Host "--------------------------------------------------------------------------------"
+
+    $filePath = "pkg_$($PKG_NAME)_$([datetime]::Now.ToString("yyMMdd_HHmmss")).log"
+    adb -d logcat *:$LOG_LEVEL | Select-String $pid | Tee-Object -FilePath $filePath
 }
 
 
@@ -403,8 +418,8 @@ function hhd-android-pcap-ls {
         
         $result = 
         adb shell ls $TCAP_DIR | 
-            where { $_ -ne "" } |
-            foreach 
+        where { $_ -ne "" } |
+        foreach 
         { 
             return "$TCAP_DIR/$_"
         }
@@ -475,4 +490,66 @@ function hhd-android-rm-build-dir {
         where { $_.Name -eq "build" } | 
         Remove-Item -Force -Recurse
     }
+}
+
+
+
+<#
+.SYNOPSIS
+.EXAMPLE
+#>
+function hhd-android-gradle-task {
+    [CmdletBinding()]
+    param
+    (
+    )
+
+    ./gradlew projects | 
+    Select-String "Project ':.*'" | 
+    ForEach-Object { 
+        $_ -match "Project ':.*'" | Out-Null
+        $proj = $Matches[0].Replace(" ", "").Replace("Project", "").Replace("'", "").Replace(":", ""); 
+        return $proj
+    } | 
+    Set-Variable projArray
+
+    Write-Host "--------------------------------------------------------------------------------"
+    0..($projArray.Length - 1) |
+    ForEach-Object {
+        Write-Host "$($_) : $($projArray[$_])"
+    }
+    Write-Host "--------------------------------------------------------------------------------"
+
+    $selIdx = Read-Host -Prompt "select proj : "
+    $selProj = $projArray[$selIdx]
+    Write-Host "selProj[$selProj]"
+
+    ./gradlew "`:$selProj`:tasks" --all | 
+    Select-String "\s-\s" | 
+    Set-Variable res
+
+    $res |
+    ForEach-Object {
+        $_ -match "\w+\s-" | Out-Null
+        $task = $Matches[0].Replace(" -", "")
+        return $task
+    } |
+    Set-Variable taskArray
+
+    Write-Host "--------------------------------------------------------------------------------"
+    0..($taskArray.Length - 1) |
+    ForEach-Object {
+        Write-Host "$($_) : $($taskArray[$_])"
+    }
+    Write-Host "--------------------------------------------------------------------------------"
+
+    $selIdx = Read-Host -Prompt "select task : "
+    $selTask = $taskArray[$selIdx]
+    Write-Host "selTask[$selTask]"
+
+    Read-Host -Prompt "./gradlew `:$selProj`:$selTask continue ?"
+    ./gradlew "`:$selProj`:$selTask"
+
+    # adb shell am force-stop $PKG_NAME
+    # adb shell monkey -p $PKG_NAME -c android.intent.category.LAUNCHER 1
 }

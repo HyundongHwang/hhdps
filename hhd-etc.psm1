@@ -1291,20 +1291,22 @@ function hhd-com-show-registry
 
 
 
+
 <#
 .SYNOPSIS
 .EXAMPLE
 #>
-function hhd-tee
+function hhd-md
 {
-   [CmdletBinding()]
-   param
-   (
-       [Parameter(Mandatory=$true, ValueFromPipeline=$true, ValueFromPipelinebyPropertyName=$true)]
-       [System.String]
-       $WORLD
-   )
+    [CmdletBinding()]
+    param
+    (
+        [Parameter(Mandatory=$true, ValueFromPipeline=$true, ValueFromPipelinebyPropertyName=$true)]
+        [System.String]
+        $TITLE
+    )
 
-    $filePath = "$([datetime]::Now.ToString("yyMMdd-HHmmss")).log"
-    tee -FilePath $filePath
+    $filePath = "$([datetime]::Now.ToString("yyMMdd")) $TITLE.md"
+    $fileContent = "# $([datetime]::Now.ToString("yyMMdd")) $TITLE"
+    $fileContent | Out-File -FilePath $filePath -Encoding utf8
 }
