@@ -553,3 +553,23 @@ function hhd-android-gradle-task {
     # adb shell am force-stop $PKG_NAME
     # adb shell monkey -p $PKG_NAME -c android.intent.category.LAUNCHER 1
 }
+
+
+
+
+<#
+.SYNOPSIS
+.EXAMPLE
+#>
+function hhd-android-adb-screencap
+{
+    [CmdletBinding()]
+    param
+    (
+    )
+
+    $filePath = "hhd_screencap_$([datetime]::Now.ToString("yyMMdd_HHmmss")).png"
+    adb shell mkdir -p /sdcard/hhd_screencap
+    adb shell screencap -p "/sdcard/hhd_screencap/$($filePath)"
+    adb pull "/sdcard/hhd_screencap/$($filePath)" $filePath
+}
